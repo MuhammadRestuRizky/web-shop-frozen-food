@@ -13,7 +13,7 @@ if ($query && mysqli_num_rows($query) > 0) {
 <html lang="id">
 <head>
   <!-- ini gw -->
-  <title>Menu Makanan ini ubah ij</title>
+  <title>Menu Maaaaaaaaaaaakanan</title>
   <style>
     html,
     body,

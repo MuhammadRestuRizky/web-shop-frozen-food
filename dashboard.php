@@ -12,7 +12,8 @@ if ($query && mysqli_num_rows($query) > 0) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <title>Menu Makanan ini ubah restu</title>
+  <!-- ini gw -->
+  <title>Menu Makanan ini ubah ij</title>
   <style>
     html,
     body,

@@ -11,7 +11,6 @@ if ($query && mysqli_num_rows($query) > 0) {
 ?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <!-- ini gw -->
   <title>Menu Maaaaaaaaaaaakanan</title>

@@ -14,7 +14,7 @@ if ($query && mysqli_num_rows($query) > 0) {
 
 <head>
   <!-- ini gw -->
-  <title>Menu Makanan ini ubah ij</title>
+  <title>Menu tesss</title>
   <style>
     html,
     body,

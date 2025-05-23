@@ -45,11 +45,13 @@ if ($query && mysqli_num_rows($query) > 0) {
     .card-product {
       padding: 8px 8px 0px 8px;
       border-radius: 20px;
+      /* height: 250px; */
       background-color: #d4d4d4;
     }
 
     .card-product img {
-      max-width: 100%;
+      height: 150px !important;
+      width: 100%;
       height: auto;
       display: block;
       object-fit: contain;
@@ -91,11 +93,11 @@ if ($query && mysqli_num_rows($query) > 0) {
       align-items: center;
     }
 
-    .link-dashboard {
+    /* .link-dashboard {
       padding: 20px 0px;
       ;
       color: ;
-    }
+    } */
 
     .profile-icon {
       background-color: white;
@@ -114,10 +116,10 @@ if ($query && mysqli_num_rows($query) > 0) {
       fill: #000;
     }
 
-    .link-sidebar {
+    /* .link-sidebar {
       font-size: 20px;
       text
-    }
+    } */
 
     .input-with-icon {
       margin-top: 20px;
@@ -189,56 +191,7 @@ if ($query && mysqli_num_rows($query) > 0) {
 <body>
   <div class="grid grid-cols-12 h-vhfull">
 
-    <div class="col-span-2 sidebar-parent">
-      <div class="flex profil-parent align-items-center">
-        <a href="profil_pembeli.php" class="profile-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 20c0-4 4-6 8-6s8 2 8 6v1H4v-1z" />
-          </svg>
-        </a>
-        <a href="" class="link-sidebar fw-semibold "> Profil</a>
-      </div>
-      <hr class="pembatas">
-      <ul>
-        <li class="link-dashboard">
-          <a href="keranjang.php" class="link-sidebar align-items-center flex fw-semibold">
-
-            <span class="profile-icon">
-              <i class=" fas fa-home" style="font-size:16px;"></i>
-            </span>
-            Dashboard
-          </a>
-        </li>
-        <li class="link-dashboard">
-          <a href="" class="link-sidebar align-items-center flex fw-semibold">
-
-            <span class="profile-icon">
-              <i class=" fas fa-shopping-cart" style="font-size:16px;"></i>
-            </span>
-            Keranjang
-          </a>
-        </li>
-        <li class="link-dashboard">
-          <a href="" class="link-sidebar align-items-center flex fw-semibold">
-
-            <span class="profile-icon">
-              <i class=" fas fa-box" style="font-size:16px;"></i>
-            </span>
-            Pesanan
-          </a>
-        </li>
-        <li class="link-dashboard">
-          <a href="keranjang.php" class="link-sidebar align-items-center flex fw-semibold">
-
-            <span class="profile-icon">
-              <i class=" fas fa-sign-out-alt" style="font-size:16px;"></i>
-            </span>
-            Logout
-          </a>
-        </li>
-      </ul>
-    </div>
+    <?php include './component/sidebar.php';?>
     <div class="col-span-10">
       <div class="right-container">
         <div class="head-container">

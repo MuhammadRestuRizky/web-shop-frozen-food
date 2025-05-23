@@ -11,7 +11,6 @@ if ($query && mysqli_num_rows($query) > 0) {
 ?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <title>Menu Makanan ini ubah restu</title>
   <style>

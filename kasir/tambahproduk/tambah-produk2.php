@@ -81,38 +81,7 @@
       border: none;
       margin-top: 5px;
     }
-  .image-upload {
-    width: 100%;
-    height: 120px;
-    border: 2px dashed black;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    position: relative;
-  }
-   .image-upload.has-image svg {
-    display: none;
-  }
-
-  .image-upload svg {
-    width: 48px;
-    height: 48px;
-    fill: #666;
-    cursor: pointer;
-    z-index: 10;
-  }
-
-    .image-upload svg {
-      width: 40px;
-      height: 40px;
-      fill: #78be91;
-    }
+ 
 
     .buttons {
       display: flex;
@@ -178,9 +147,7 @@
       margin-top: 20px; 
       margin-bottom: 2px; 
     }
-      #fileInput {
-    display: none;
-  }
+   
   @media (max-width: 768px) {
   body {
     padding:0px 0px;
@@ -209,20 +176,6 @@
   <div class="container">
     
   <h2>Tambah Produk baru</h2>
-   <div class="image-upload" id="imageUpload" onclick="document.getElementById('fileInput').click()">
-    <!-- Ikon tambah -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M19 11H13V5h-2v6H5v2h6v6h2v-6h6z"/>
-    </svg>
-  </div>
-  
-  <!-- Input file disembunyikan -->
-  <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
-<!-- </div> -->
-<img id="imgpreview" src="#" alt="Preview" style="display: none;"/>
-
-<!-- Input file disembunyikan -->
-<input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
 
 <!-- Tempat preview gambar -->
     <!-- Tombol submit -->
@@ -275,19 +228,6 @@
       </svg>
     </div>
   </nav>
-<script>
-    function previewImage(event) {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const imageUploadDiv = document.getElementById('imageUpload');
-        imageUploadDiv.style.backgroundImage = `url('${e.target.result}')`;
-        imageUploadDiv.classList.add('has-image');
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-</script>
+
 </body>
 </html>

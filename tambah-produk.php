@@ -220,10 +220,8 @@
   <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
 <!-- </div> -->
 <img id="imgpreview" src="#" alt="Preview" style="display: none;"/>
-
 <!-- Input file disembunyikan -->
 <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
-
 <!-- Tempat preview gambar -->
     <!-- Tombol submit -->
       <div class="form-group">

@@ -1,5 +1,5 @@
 <?php
-include("konfig.php");
+include("../../konfig.php");
 session_start();
 $username=$_SESSION['username'];
  $sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";

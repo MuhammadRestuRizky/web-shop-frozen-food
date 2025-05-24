@@ -1,3 +1,7 @@
+.text-center {
+  text-align: center;
+}
+
 /* === Flex Container === */
 .flex {
   display: flex;

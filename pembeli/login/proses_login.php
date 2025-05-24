@@ -1,5 +1,5 @@
 <?php
-include("konfig.php");
+include("../../konfig.php");
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $user = mysqli_fetch_assoc($query);
         // print_r($user);
         $_SESSION['username'] = $user['username'];
-        header("Location: dashboard.php?status=login_berhasil");
+        header("Location: ../dashboard/dashboard-pembeli.php?status=login_berhasil");
         exit;
     } else {
         header("Location: login_pembeli.php?status=gagal_login");

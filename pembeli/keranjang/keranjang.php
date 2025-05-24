@@ -1,5 +1,5 @@
 <?php
-include("konfig.php");
+include("../../konfig.php");
 session_start();
 $username = $_SESSION['username'];
 $sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
@@ -39,13 +39,15 @@ if ($query && mysqli_num_rows($query) > 0) {
 
         .container-cart {
             padding-bottom: 100px;
-           
+
         }
-        .cart-parent{
+
+        .cart-parent {
             background-color: #EFEEEE;
-             padding: 20px 40px;
-             position: relative;
+            padding: 20px 40px;
+            position: relative;
         }
+
         .card-product {
             padding: 8px 8px 0px 8px;
             border-radius: 20px;
@@ -71,99 +73,18 @@ if ($query && mysqli_num_rows($query) > 0) {
         }
 
 
-        .sidebar-parent {
-            padding: 20px;
-            background: #7CAEDF;
-        }
-
-        .sidebar {
-            position: sticky;
-            top: 80px;
-        }
-
         .h-vhfull {
             height: 100vh;
         }
-
         ul {
             list-style: none;
         }
-
         a {
             text-decoration: none;
             color: black;
         }
-
-        .fw-semibold {
-            font-weight: 400;
-        }
-
-        .profil-parent {
-            padding: 30px 0px;
-        }
-
         .align-items-center {
             align-items: center;
-        }
-
-        /* .link-dashboard {
-      padding: 20px 0px;
-      ;
-      color: ;
-    } */
-
-        .profile-icon {
-            background-color: white;
-            border-radius: 50%;
-            margin-right: 8px;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #000;
-        }
-
-        /* .link-sidebar {
-      font-size: 20px;
-      text
-    } */
-
-        .input-with-icon {
-            margin-top: 20px;
-            position: relative;
-            width: 100%;
-            /* max-width: 300px; */
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-            pointer-events: none;
-        }
-
-        .input-with-icon input {
-            width: 100%;
-            padding: 10px 10px 10px 35px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .radius-input {
-            border-radius: 20px !important;
-        }
-
-        .input-search {
-            width: 100% !important;
         }
 
         .cart-button-parent {
@@ -209,36 +130,34 @@ if ($query && mysqli_num_rows($query) > 0) {
             color: white;
             border-radius: 8px;
         }
-        .card-cart-total{
+
+        .card-cart-total {
             background-color: #EFEEEE;
-            padding:30px 40px 20px 40px;
+            padding: 30px 40px 20px 40px;
             width: 100%;
             position: fixed;
-            bottom:0;
+            bottom: 0;
             /* margin-top: 60px; */
         }
-        .text-total-semua{
+
+        .text-total-semua {
             font-weight: 400;
         }
-     
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="../../global.css">
 </head>
 
 <body>
     <div class="grid grid-cols-12 h-vhfull">
 
-        <?php include './component/sidebar.php'; ?>
+        <?php include '../../component/sidebar-pembeli.php'; ?>
         <div class="col-span-10">
             <div class="right-container">
                 <div class="head-container">
                     <h1>Keranjang</h1>
 
-                    <div class="input-with-icon">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="radius-input input-search" placeholder="Cari...">
-                    </div>
+
                 </div>
                 <div class="cart-parent">
                     <div class="grid grid-cols-12 gap-4">
@@ -259,8 +178,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -282,8 +201,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -291,8 +210,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -314,8 +233,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -323,8 +242,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -346,8 +265,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -355,8 +274,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -378,8 +297,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -387,8 +306,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -410,8 +329,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -419,8 +338,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -442,8 +361,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -451,8 +370,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -474,8 +393,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -483,8 +402,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -506,8 +425,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -515,8 +434,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -538,8 +457,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -547,8 +466,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -570,8 +489,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -579,8 +498,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -602,8 +521,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -611,8 +530,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -634,8 +553,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -643,8 +562,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -666,8 +585,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -675,8 +594,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -698,8 +617,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -707,8 +626,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -730,8 +649,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -739,8 +658,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
-    
-                                    <img class="product-img-cart" src="./img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+
+                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -762,8 +681,8 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <div class="col-span-2  flex items-center">
                                 <p class="total-per-produk">Rp. 34.000</p>
                             </div>
-    
-    
+
+
                             <div class="col-span-2  flex items-center">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
@@ -772,13 +691,15 @@ if ($query && mysqli_num_rows($query) > 0) {
                     <div class="card-cart-total">
                         <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-4">
-                                <button class="button-Custom"><h2 class="text-total-semua">
-                                    Pesan
-                                </h2></button>
+                                <button class="button-Custom">
+                                    <h2 class="text-total-semua">
+                                        Pesan
+                                    </h2>
+                                </button>
                             </div>
                             <div class="col-span-4">
                                 <h2 class="text-total-semua">Jumlah Barang:</h1>
-                                <h2 class="text-total-semua">Total:</h2>
+                                    <h2 class="text-total-semua">Total:</h2>
                             </div>
                             <div class="col-span-4">
                                 <h2 class="text-total-semua">34 Pcs</h2>

@@ -1,146 +1,263 @@
 <?php
 include("../../konfig.php");
 session_start();
-$username=$_SESSION['username'];
- $sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
-    $query = mysqli_query($db, $sql);
-    if ($query && mysqli_num_rows($query) > 0) {
-        $user = mysqli_fetch_assoc($query);
-        
-    }
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
+$query = mysqli_query($db, $sql);
+if ($query && mysqli_num_rows($query) > 0) {
+  $user = mysqli_fetch_assoc($query);
+}
+$editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil Pembeli</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    html,
+    body,
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #fdfdfd;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #96c5f7, white);
     }
 
-    .header {
-      display: flex;
-      align-items: center;
+    .container {
       padding: 16px;
-      font-weight: bold;
-      font-size: 18px;
-      position: relative;
     }
 
-    .header i {
-      margin-right: 12px;
+    .head-container {
+      padding: 20px 40px;
+    }
+
+    .container-profil {
+      background: white;
+      padding: 20px 40px;
+    }
+
+    .h-vhfull {
+      height: 100vh;
+    }
+
+    .img-profil img {
+      width: 200px;
+      height: 200px;
+      border-radius: 16px;
+      object-fit: cover;
+    }
+
+    .judul-teks {
+      color: gray;
+    }
+
+    .grup-text {
+      margin-top: 10px;
+    }
+
+    .data-profil-teks {
+      font-weight: 400;
+    }
+
+    .btn-edit {
+      background-color: #2a8df4;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
       cursor: pointer;
     }
 
-    .profile-cover {
-      background-image: url('https://via.placeholder.com/300x120/ffffff/000000?text=+'); /* ganti sesuai background kamu */
-      background-size: cover;
-      background-position: center;
-      border-radius: 80px;
-      margin: 16px;
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .profile-pic {
-      width: 100px;
-      height: 100px;
-      background-color: #cbe0f7;
-      border-radius: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #333;
-      position: relative;
-      z-index: 1;
-    }
-
-    .info {
-      padding: 24px 16px;
-      font-size: 16px;
-    }
-
-    .info p {
-      margin: 8px 0;
-    }
-
-    .info span {
-      font-weight: bold;
-      margin-right: 8px;
-    }
-
-    .add-address {
-      color: #2a8df4;
+    .btn-batal-edit {
+      background-color: rgb(210, 210, 210);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin-right: 10px;
       cursor: pointer;
-      text-decoration: none;
     }
 
-    .btn-masuk {
-        display: block;
-        width: 100%;
-        text-align: center;
-        background-color: rgb(135, 179, 218);
-        color: black;
-        font-weight: bold;
-        padding: 12px;
-        border-radius: 25px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-decoration: underline;
-        margin-top: 16px;
-      }
+    input[type="text"],
+    input[type="password"] {
+      background: rgb(223, 223, 223);
+      font-size: 24px;
+      padding: 5px 10px;
+      border-radius: 16px;
+      border: none;
+    }
 
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
+    .img-profil {
+      position: relative;
+    }
+
+    .img-profil img {
+      width: 200px;
+      height: 200px;
+      border-radius: 16px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .overlay-icon {
+      position: absolute;
+      top: 0;
       left: 0;
-      right: 0;
-      background: #cbe0f7;
+      width: 200px;
+      height: 200px;
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      border-radius: 16px;
       display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.3s ease;
+      font-size: 32px;
     }
 
-    .bottom-nav i {
-      font-size: 22px;
-      color: #2a8df4;
+    .btn-profil {
+      border-radius: 16px;
+      padding: 10px 15px;
+      border: none;
+    }
+
+    .btn-batal-edit {
+      background-color: #C71515;
+      margin-right: 20px;
+    }
+
+    .btn-edit {
+      background-color: #4FC965;
+      margin-right: 20px;
+      color: black;
+    }
+
+    .img-profil label:hover .overlay-icon {
+      opacity: 1;
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../global.css">
 </head>
+
 <body>
+  <div class="grid grid-cols-12 h-vhfull">
+    <?php include '../../component/sidebar-pembeli.php'; ?>
+    <div class="col-span-10">
+      <div class="right-container">
+        <div class="head-container flex justify-between items-center">
+          <h1 style="font-size: 50px;">Profil Pembeli</h1>
+          <h2>
+            <a href="../pembeli/dashboard/keranjang.php" class="items-center flex fw-semibold">
+              Logout &nbsp;
+              <i class="fas fa-sign-out-alt" style="font-size:30px;"></i>
+            </a>
+          </h2>
+        </div>
+        <div class="container-profil">
 
-  <div class="header">
-    <i class="fas fa-arrow-left"></i> Profil User
+          <div class="flex justify-between items-center">
+            <h3>Id Pembeli : 001</h3>
+            <div class="button-grup flex items-center justify-end">
+              <?php if ($editMode): ?>
+                <a href="profil_pembeli.php" class="btn-profil btn-batal-edit">
+                  <h2>Batal</h2>
+                </a>
+                <form action="simpan_edit.php" method="POST">
+                  <!-- <button type="submit" class=" flex items-center"> -->
+                  <a href="" class="btn-profil btn-edit flex items-center">
+
+                    <h2>
+                      Simpan
+                    </h2>
+                    &nbsp;
+                    <span class="ml-2">
+                      <i class="fa fa-arrow-up" style="font-size: 24px;"></i>
+                    </span>
+                  </a>
+                  <!-- </button> -->
+                </form>
+              <?php else: ?>
+                <a href="?edit=1" class="btn-profil btn-edit flex items-center">
+                  <h2>Edit</h2>
+                  &nbsp;
+                  <span class="ml-2">
+                    <i class="fas fa-edit" style="font-size:20px;"></i>
+                  </span>
+                </a>
+              <?php endif; ?>
+            </div>
+          </div>
+          <form action="simpan_edit.php" method="POST">
+            <div class="flex items-start">
+              <div class="img-profil" style="position: relative;">
+                <?php if ($editMode): ?>
+                  <label for="foto-upload" style="cursor: pointer; display: block; position: relative;">
+                    <img src="../../img/<?= htmlspecialchars($user['foto'] ?? 'sosis.jpeg') ?>" alt="Foto Profil">
+                    <div class="overlay-icon">
+                      <i class="fas fa-camera"></i>
+                    </div>
+                  </label>
+                  <input type="file" name="foto" id="foto-upload" style="display: none;">
+                <?php else: ?>
+                  <img src="../../img/<?= htmlspecialchars($user['foto'] ?? 'sosis.jpeg') ?>" alt="Foto Profil">
+                <?php endif; ?>
+              </div>
+              &nbsp;&nbsp;
+              <div>
+                <div>
+                    <h2 class="judul-teks">Nama</h2>
+                    <h1 style="font-weight: 900;"><?= htmlspecialchars($user['username']) ?? 'Restu' ?></h1>
+                  </div>
+                  <br>
+                  <br>
+                  <div>
+                  <h3 class="judul-teks" style="margin-bottom: 5px;">No Telepon</h2>
+                  <h2>+62 123123123</h2>
+                </div>
+              </div>
+            </div>
+
+            <br><br>
+            <h2>Informasi Profil</h2>
+            <br>
+
+            <div class="grid grid-cols-12 gap-4">
+              <div class="col-span-6 grup-text">
+                <p class="judul-teks">Username</p><br>
+                <?php if ($editMode): ?>
+                  <input type="text" name="username" value="<?= htmlspecialchars($user['username'] ?? 'Restu') ?>">
+                <?php else: ?>
+                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['username'] ?? 'Restu') ?></h2>
+                <?php endif; ?>
+              </div>
+
+              <div class="col-span-6 grup-text">
+                <p class="judul-teks">No Telepon</p><br>
+                <?php if ($editMode): ?>
+                  <input type="text" name="no_telp" value="<?= htmlspecialchars($user['no_telp'] ?? '+62 341234') ?>">
+                <?php else: ?>
+                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['no_telp'] ?? '+62 341234') ?></h2>
+                <?php endif; ?>
+              </div>
+
+              <div class="col-span-6 grup-text">
+                <p class="judul-teks">Password</p><br>
+
+                <h2 class="data-profil-teks">********</h2>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="profile-cover">
-    <div class="profile-pic">Tambah Foto</div>
-  </div>
-
-  <div class="INFORMASI AKUN">
-    <p><span>ID Pembeli :<?=$user['id_pembeli']?></span> </p>
-    <p><span>Nama : <?=$user['username']?></span> </p>
-    <p><span>No. HP : <?=$user['no_telpon']?></span> </p>
-  </div>
-
-  <a href="./dashboard.php" class="btn-masuk"> PESAN PRODUK</a>
-  <a href="./keranjang.php" class="btn-masuk"> LIHAT PESANAN</a>
-
-  <div class="bottom-nav">
-    <i class="fas fa-home"></i>
-    <a href="dashboard.php" class="fas fa-search"></a>
-    <i class="fas fa-shopping-cart"></i>
-    <a href="profil_pembeli.php" class="fas fa-user"></a>
-  </div>
-
 </body>
+
 </html>

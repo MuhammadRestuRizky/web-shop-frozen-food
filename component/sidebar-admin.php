@@ -109,7 +109,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </style>
 <div class="col-span-2 sidebar-parent">
     <div class="profil-parent align-items-center padding-sidebar">
-        <a href="../profil/profil_kasir.php" class="link-sidebar align-items-center flex fw-semibold">
+        <a href="../profil-kasir/profil_kasir.php" class="link-sidebar align-items-center flex fw-semibold">
             <span class="profile-user-icon">
                 <i class=" fas fa-user" style="font-size:20px;"></i>
             </span>

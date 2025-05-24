@@ -11,9 +11,8 @@ if ($query && mysqli_num_rows($query) > 0) {
 <!DOCTYPE html>
 <html lang="id">
 
-<head>
-    <!-- ini gw -->
-    <title>Menu Maaaaaaaaaaaakanan</title>
+<head> 
+    <title>Menu Kelola Poduct</title>
     <style>
         html,
         body,
@@ -31,26 +30,32 @@ if ($query && mysqli_num_rows($query) > 0) {
 
         .container {
             padding: 16px;
-        }
-
-        .right-container {
-            /* height: 100%; */
-        }
-
+        } 
         .head-container {
             padding: 20px 40px;
         }
 
-        .container-cart {
+        .container-produxt {
             padding-bottom: 100px;
 
         }
 
-        .cart-parent {
-            background-color: #EFEEEE;
-            padding: 20px 40px;
+        .product-parent {
+            background-color: #C7C7C7;
             position: relative;
             height: 100%;
+        }
+
+        .padding-product-table{
+            padding: 20px 40px;
+
+        }
+
+        .card-product {
+            padding: 8px 8px 0px 8px;
+            border-radius: 20px;
+            /* height: 250px; */
+            background-color: #EFEEEE;
         }
 
         .button-Custom {
@@ -63,7 +68,7 @@ if ($query && mysqli_num_rows($query) > 0) {
             border-radius: 10px;
         }
 
-        .product-img-cart {
+        .product-img-produxt {
             height: 60px !important;
             width: 60px;
             display: block;
@@ -88,7 +93,7 @@ if ($query && mysqli_num_rows($query) > 0) {
             align-items: center;
         }
 
-        .cart-button-parent {
+        .produxt-button-parent {
             display: flex;
             align-items: center;
             gap: 5px;
@@ -96,7 +101,7 @@ if ($query && mysqli_num_rows($query) > 0) {
             margin-top: 10px;
         }
 
-        .cart-button-parent button {
+        .produxt-button-parent button {
             width: 25px;
             height: 25px;
             font-size: 20px;
@@ -110,14 +115,14 @@ if ($query && mysqli_num_rows($query) > 0) {
             transition: background-color 0.3s ease;
         }
 
-        .cart-button-parent span {
+        .produxt-button-parent span {
             font-size: 20px;
             /* min-width: 1px; */
             text-align: center;
             display: inline-block;
         }
 
-        .cart-value {
+        .produxt-value {
             font-weight: 600;
         }
 
@@ -131,17 +136,30 @@ if ($query && mysqli_num_rows($query) > 0) {
             color: white;
             border-radius: 8px;
         }
-
-        .card-cart-total {
-            background-color: #EFEEEE;
-            padding: 30px 40px 20px 40px;
-            width: 100%;
+        .icon-edit {
+            padding: 8px;
+            background-color: #2955F5;
+            color: white;
+            border-radius: 8px;
+            margin-left: 20px;
+        }
+        .card-head{
+            background-color: #C7C7C7 ;
+        }
+        .card-total-products{
+            background-color: #C7C7C7;
+            padding: 10px 40px;
+            /* width: 100%; */
+            border-radius: 10px;
             position: fixed;
-            bottom: 0;
-            /* margin-top: 60px; */
+            bottom: 0; 
+            right: 0;
+        }
+        .card-total-products >h3{
+            font-weight: 400;
         }
 
-        .text-total-semua {
+        .text-deskripsi-semua {
             font-weight: 400;
         }
     </style>
@@ -152,16 +170,14 @@ if ($query && mysqli_num_rows($query) > 0) {
 <body>
     <div class="grid grid-cols-12 h-vhfull">
 
-        <?php include '../../component/sidebar-pembeli.php'; ?>
+        <?php include '../../component/sidebar-admin.php'; ?>
         <div class="col-span-10">
             <div class="right-container">
                 <div class="head-container">
-                    <h1>Keranjang</h1>
-
-
+                    <h1>Kelola Produk</h1>
                 </div>
-                <div class="cart-parent">
-                    <div class="grid grid-cols-12 gap-4">
+                <div class="product-parent">
+                    <div class="padding-product-table card-head grid grid-cols-12 gap-4">
                         <div class="col-span-3  flex items-center">
                             <h3>Produk</h3>
                         </div>
@@ -172,15 +188,15 @@ if ($query && mysqli_num_rows($query) > 0) {
                             <h3>Jumlah</h3>
                         </div>
                         <div class="col-span-2  flex items-center">
-                            <h3>Total</h3>
+                            <h3>Deskripsi</h3>
                         </div>
                     </div>
-                    <div class="container-cart">
+                    <div class=" padding-product-table container-produxt">
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
 
-                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                                    <img class="product-img-produxt" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -192,27 +208,27 @@ if ($query && mysqli_num_rows($query) > 0) {
                             </div>
                             <div class="col-span-2  flex items-center">
                                 <div class="flex">
-                                    <div class="cart-button-parent">
+                                    <div class="produxt-button-parent">
                                         <button class="btn-decrease">-</button>
-                                        <span class="cart-value" data-qty="2">2</span>
+                                        <span class="produxt-value" data-qty="2">2</span>
                                         <button class="btn-increase">+</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-span-2  flex items-center">
-                                <p class="total-per-produk">Rp. 34.000</p>
+                                <p class="deskripsi-per-produk">Lorem ipsum dolor sit.</p>
                             </div>
-
-
-                            <div class="col-span-2  flex items-center">
+                            <div class="col-span-3  flex items-center justify-end">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
+                                <p><i class="icon-edit fa fa-edit "></i></p>
+
                             </div>
                         </div>
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
 
-                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                                    <img class="product-img-produxt" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -224,27 +240,27 @@ if ($query && mysqli_num_rows($query) > 0) {
                             </div>
                             <div class="col-span-2  flex items-center">
                                 <div class="flex">
-                                    <div class="cart-button-parent">
+                                    <div class="produxt-button-parent">
                                         <button class="btn-decrease">-</button>
-                                        <span class="cart-value" data-qty="2">2</span>
+                                        <span class="produxt-value" data-qty="2">2</span>
                                         <button class="btn-increase">+</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-span-2  flex items-center">
-                                <p class="total-per-produk">Rp. 34.000</p>
+                                <p class="deskripsi-per-produk">Lorem ipsum dolor sit.</p>
                             </div>
-
-
-                            <div class="col-span-2  flex items-center">
+                            <div class="col-span-3  flex items-center justify-end">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
+                                <p><i class="icon-edit fa fa-edit "></i></p>
+
                             </div>
                         </div>
                         <div class="data-row-tables grid grid-cols-12 gap-4">
                             <div class="col-span-3 flex items-center justify-start">
                                 <div class="flex justify-start items-center">
 
-                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                                    <img class="product-img-produxt" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
                                     <div class="" style="margin-left: 16px;">
                                         <p> 001</p>
                                         <p> Stick kentang</p>
@@ -256,105 +272,28 @@ if ($query && mysqli_num_rows($query) > 0) {
                             </div>
                             <div class="col-span-2  flex items-center">
                                 <div class="flex">
-                                    <div class="cart-button-parent">
+                                    <div class="produxt-button-parent">
                                         <button class="btn-decrease">-</button>
-                                        <span class="cart-value" data-qty="2">2</span>
+                                        <span class="produxt-value" data-qty="2">2</span>
                                         <button class="btn-increase">+</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-span-2  flex items-center">
-                                <p class="total-per-produk">Rp. 34.000</p>
+                                <p class="deskripsi-per-produk">Lorem ipsum dolor sit.</p>
                             </div>
-
-
-                            <div class="col-span-2  flex items-center">
+                            <div class="col-span-3  flex items-center justify-end">
                                 <p><i class="icon-hapus fa fa-trash "></i></p>
-                            </div>
-                        </div>
-                        <div class="data-row-tables grid grid-cols-12 gap-4">
-                            <div class="col-span-3 flex items-center justify-start">
-                                <div class="flex justify-start items-center">
+                                <p><i class="icon-edit fa fa-edit "></i></p>
 
-                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
-                                    <div class="" style="margin-left: 16px;">
-                                        <p> 001</p>
-                                        <p> Stick kentang</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-span-2  flex items-center">
-                                <p class="harga-satuan" data-harga="17000">Rp. 17.000</p>
-                            </div>
-                            <div class="col-span-2  flex items-center">
-                                <div class="flex">
-                                    <div class="cart-button-parent">
-                                        <button class="btn-decrease">-</button>
-                                        <span class="cart-value" data-qty="2">2</span>
-                                        <button class="btn-increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-span-2  flex items-center">
-                                <p class="total-per-produk">Rp. 34.000</p>
-                            </div>
-
-
-                            <div class="col-span-2  flex items-center">
-                                <p><i class="icon-hapus fa fa-trash "></i></p>
-                            </div>
-                        </div>
-                        <div class="data-row-tables grid grid-cols-12 gap-4">
-                            <div class="col-span-3 flex items-center justify-start">
-                                <div class="flex justify-start items-center">
-
-                                    <img class="product-img-cart" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
-                                    <div class="" style="margin-left: 16px;">
-                                        <p> 001</p>
-                                        <p> Stick kentang</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-span-2  flex items-center">
-                                <p class="harga-satuan" data-harga="17000">Rp. 17.000</p>
-                            </div>
-                            <div class="col-span-2  flex items-center">
-                                <div class="flex">
-                                    <div class="cart-button-parent">
-                                        <button class="btn-decrease">-</button>
-                                        <span class="cart-value" data-qty="2">2</span>
-                                        <button class="btn-increase">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-span-2  flex items-center">
-                                <p class="total-per-produk">Rp. 34.000</p>
-                            </div>
-
-
-                            <div class="col-span-2  flex items-center">
-                                <p><i class="icon-hapus fa fa-trash "></i></p>
                             </div>
                         </div>
                     </div>
-                    <div class="card-cart-total">
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="col-span-4">
-                                <button class="button-Custom">
-                                    <h2 class="text-total-semua">
-                                        Pesan
-                                    </h2>
-                                </button>
-                            </div>
-                            <div class="col-span-4">
-                                <h2 class="text-total-semua">Jumlah Barang:</h1>
-                                    <h2 class="text-total-semua">Total:</h2>
-                            </div>
-                            <div class="col-span-4">
-                                <h2 class="text-total-semua">34 Pcs</h2>
-                                <h2 id="total-semua" class="text-total-semua">Rp. 0</h2>
-                            </div>
-                        </div>
+                    <div class="card-total-products">
+                        <h3>
+
+                            Total Produk : <span class="total-produk">2</span> Produk
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -362,53 +301,39 @@ if ($query && mysqli_num_rows($query) > 0) {
     </div>
 </body>
 <script>
+  
+
     function formatRupiah(number) {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR'
         }).format(number);
     }
-
-    function updateTotal() {
-        let totalKeseluruhan = 0;
-        document.querySelectorAll('.data-row-tables').forEach(row => {
-            const harga = parseInt(row.querySelector('.harga-satuan').dataset.harga);
-            const qtyEl = row.querySelector('.cart-value');
-            const qty = parseInt(qtyEl.textContent);
-            const total = harga * qty;
-
-            row.querySelector('.total-per-produk').textContent = formatRupiah(total);
-            totalKeseluruhan += total;
-        });
-
-        document.getElementById('total-semua').textContent = formatRupiah(totalKeseluruhan);
-    }
-
+ 
     document.querySelectorAll('.data-row-tables').forEach(row => {
         const btnIncrease = row.querySelector('.btn-increase');
         const btnDecrease = row.querySelector('.btn-decrease');
-        const qtyEl = row.querySelector('.cart-value');
+        const qtyEl = row.querySelector('.produxt-value');
 
         btnIncrease.addEventListener('click', () => {
             let current = parseInt(qtyEl.textContent);
             qtyEl.textContent = current + 1;
-            updateTotal();
+    
         });
 
         btnDecrease.addEventListener('click', () => {
             let current = parseInt(qtyEl.textContent);
-            if (current > 1) {
+            if (current > 0) {
                 qtyEl.textContent = current - 1;
-                updateTotal();
+        
             } else {
 
-                alert('Pesanan minimal 1');
+                alert('Stok produk telah mencapai 0');
             }
         });
     });
 
     // Panggil pertama kali untuk inisialisasi
-    updateTotal();
 </script>
 
 </html>

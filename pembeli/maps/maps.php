@@ -46,7 +46,7 @@ if ($query && mysqli_num_rows($query) > 0) {
     .h-vhfull {
       height: 100vh;
     }
-    .maps-teks> h2,h1{
+    .maps-teks> h3,h2{
         font-weight: 400;
     }
     .link-maps > a{
@@ -54,6 +54,9 @@ if ($query && mysqli_num_rows($query) > 0) {
         font-weight: 400;
         color: #2a8df4;
         text-decoration: none;
+    }
+    .fw-regular{
+        font-weight: 400;
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -87,15 +90,15 @@ if ($query && mysqli_num_rows($query) > 0) {
                 </div>
                 <div class="col-span-7 flex items-center justify-start">
                     <div class="maps-teks">
-                        <h2>Nama toko: </h3>
-                        <h1>    Wijaaya Frozen Food</h1>
+                        <h3>Nama toko: </h3>
+                        <h2>    Wijaaya Frozen Food</h2>
                         <br>
                         <br>
                         <br>
                         <br>
                         <br>
-                        <p>Alamat </p>
-                        <h1>Desa Legok, Kec. Lohbener, Kab.Indramayu, Jawa Barat 45252</h1>
+                        <h3>Alamat: </h3>
+                        <h2>Desa Legok, Kec. Lohbener, Kab.Indramayu, Jawa Barat 45252</h2>
 
                     </div>
                 </div>
@@ -103,9 +106,10 @@ if ($query && mysqli_num_rows($query) > 0) {
             <br>
             <br>
             <br>
-            <h1 class="link-maps">
+            <h3 class="fw-regular">Link Maps: </h3>
+            <h2 class="link-maps">
                 <a  href="https://maps.app.goo.gl/BBTVm6PQB7AHgTE49" target="_blank">https://maps.app.goo.gl/BBTVm6PQB7AHgTE49</a>
-            </h1>
+            </h2>
         </div>
         </div>
       </div>

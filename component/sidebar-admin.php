@@ -236,4 +236,5 @@ if ($query && mysqli_num_rows($query) > 0) {
 
         </li>
     </ul>
+<!-- maps -->
 </div>

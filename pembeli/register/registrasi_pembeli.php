@@ -113,7 +113,7 @@
 
       <div class="form-group">
         <label>Username</label>
-        <input type="text" name="username" placeholder="Masukkan UserName" required>
+        <input type="text" name="username" placeholder="Masukkan Username" required>
       </div>
 
       <div class="form-group">
@@ -129,7 +129,7 @@
       <button type="submit" class="btn-submit" name="submit">REGISTRASI</button>
 
       <div class="login-link">
-        Sudah Punya Akun? <a href="login_pembeli.php">Log-in</a>
+        Sudah Punya Akun? <a href="../login/login_pembeli.php">Log-in</a>
       </div>
     </form>
   </div>

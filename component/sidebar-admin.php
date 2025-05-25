@@ -174,4 +174,5 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </a>
         </li>
     </ul>
+<!-- maps -->
 </div>

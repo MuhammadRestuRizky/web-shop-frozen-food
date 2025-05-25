@@ -1,37 +1,17 @@
 <?php
 include("../../konfig.php");
 session_start();
-$nama_kasir = $_SESSION['nama_kasir'];
-$sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
 }
-if (isset($_GET['hapus'])) {
-
-    $id = $_GET['hapus'] ?? '';
-
-
-    $sql = "SELECT image_produk FROM tb_produk WHERE id_produk=$id";
-    $data = mysqli_fetch_assoc(mysqli_query($db, $sql));
-    if ($data['image_produk']) {
-        $path = "../../img/produkImg/" . $data['image_produk'];
-        if (file_exists($path)) unlink($path);
-    }
-    $sql = "DELETE FROM tb_produk WHERE id_produk=$id";
-    mysqli_query($db, $sql);
-    header("Location: kelola-produk.php");
-}
-?>
-
-<!-- buat hapus produk -->
-<?php
-
 ?>
 <!DOCTYPE html>
 <html lang="id">
 
-<head>
+<head> 
     <title>Menu Kelola Poduct</title>
     <style>
         html,
@@ -50,8 +30,7 @@ if (isset($_GET['hapus'])) {
 
         .container {
             padding: 16px;
-        }
-
+        } 
         .head-container {
             padding: 20px 40px;
         }
@@ -67,7 +46,7 @@ if (isset($_GET['hapus'])) {
             height: 100%;
         }
 
-        .padding-product-table {
+        .padding-product-table{
             padding: 20px 40px;
 
         }
@@ -127,6 +106,7 @@ if (isset($_GET['hapus'])) {
             height: 25px;
             font-size: 20px;
             font-weight: bold;
+
             background-color: #1677FF;
             color: #f1f1f1;
             border: none;
@@ -156,7 +136,6 @@ if (isset($_GET['hapus'])) {
             color: white;
             border-radius: 8px;
         }
-
         .icon-edit {
             padding: 8px;
             background-color: #2955F5;
@@ -164,82 +143,24 @@ if (isset($_GET['hapus'])) {
             border-radius: 8px;
             margin-left: 20px;
         }
-
-        .card-head {
-            background-color: #C7C7C7;
+        .card-head{
+            background-color: #C7C7C7 ;
         }
-
-        .card-total-products {
+        .card-total-products{
             background-color: #C7C7C7;
             padding: 10px 40px;
             /* width: 100%; */
             border-radius: 10px;
             position: fixed;
-            bottom: 0;
+            bottom: 0; 
             right: 0;
         }
-
-        .card-total-products>h3 {
+        .card-total-products >h3{
             font-weight: 400;
         }
 
         .text-deskripsi-semua {
             font-weight: 400;
-        }
-
-        .notification-icon {
-            position: relative;
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        .notification-icon .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-
-        /* Dialog notifikasi */
-        .notification-dialog {
-            display: none;
-            position: absolute;
-            top: 35px;
-            right: 0;
-            background: white;
-            border: 1px solid #ccc;
-            width: 550px;
-            z-index: 100;
-            border-radius: 20px;
-        }
-
-        .notification-dialog.active {
-            display: block;
-        }
-
-        .notification-dialog p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .notification-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .head-notifikasi {
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            padding: 20px 10px;
-            background-color: #7CAEDF;
-        }
-
-        .notifikasi-content {
-            padding: 10px;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -253,47 +174,7 @@ if (isset($_GET['hapus'])) {
         <div class="col-span-10">
             <div class="right-container">
                 <div class="head-container">
-                    <div class="flex items-center justify-between">
-
-                        <h1>Kelola Produk</h1>
-                        <?php
-
-                        $sql = "SELECT * FROM tb_notifikasi 
-        WHERE jenis_pengguna = 'adminkasir'
-        ORDER BY tgl_notifikasi DESC 
-        LIMIT 10";
-                        $result = mysqli_query($db, $sql);
-
-                        // Hitung jumlah notifikasi
-                        $jumlahNotif = mysqli_num_rows($result);
-                        ?>
-                        <div class="notification-container">
-                            <i class="fas fa-bell notification-icon" id="notifIcon">
-                                <span class="badge"><?= $jumlahNotif ?></span>
-                            </i>
-
-                            <div class="notification-dialog" id="notifDialog">
-                                <div class="head-notifikasi">
-                                    <h2>Notifikasi</h2>
-                                </div>
-                                <div class="notifikasi-content">
-
-                                    <?php if ($jumlahNotif > 0): ?>
-                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <small>
-                                                <p class="flex">
-                                                    📩 <?= htmlspecialchars($row['deskripsi']) ?>
-                                                    🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
-                                                </p>
-                                            </small>
-                                        <?php endwhile; ?>
-                                    <?php else: ?>
-                                        <p>Tidak ada notifikasi.</p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h1>Kelola Produk</h1>
                 </div>
                 <div class="product-parent">
                     <div class="padding-product-table card-head grid grid-cols-12 gap-4">
@@ -311,62 +192,102 @@ if (isset($_GET['hapus'])) {
                         </div>
                     </div>
                     <div class=" padding-product-table container-produxt">
-                        <?php
-                        $cari = isset($_GET['cari']) ? mysqli_real_escape_string($db, $_GET['cari']) : '';
+                        <div class="data-row-tables grid grid-cols-12 gap-4">
+                            <div class="col-span-3 flex items-center justify-start">
+                                <div class="flex justify-start items-center">
 
-                        if (!empty($cari)) {
-                            $cari = mysqli_real_escape_string($db, $cari);
-                            $sqlProduk = "SELECT * FROM tb_produk WHERE nama_produk LIKE '%$cari%' OR id_produk LIKE '%$cari%'";
-                        } else {
-                            $sqlProduk = "SELECT * FROM tb_produk";
-                        }
-                        $resultProduk = mysqli_query($db, $sqlProduk);
-
-                        while ($row = mysqli_fetch_assoc($resultProduk)) {
-                        ?>
-                            <div class="data-row-tables grid grid-cols-12 gap-4" style="margin-bottom: 10px;">
-                                <div class="col-span-3 flex items-center justify-start">
-                                    <div class="flex justify-start items-center">
-                                        <img class="product-img-produxt" src="../../img/produkImg/<?= htmlspecialchars($row['image_produk']) ?>" alt="image">
-                                        <div style="margin-left: 16px;">
-                                            <p><?= htmlspecialchars($row['id_produk']) ?></p>
-                                            <p><?= htmlspecialchars($row['nama_produk']) ?></p>
-                                        </div>
+                                    <img class="product-img-produxt" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                                    <div class="" style="margin-left: 16px;">
+                                        <p> 001</p>
+                                        <p> Stick kentang</p>
                                     </div>
-                                </div>
-                                <div class="col-span-2 flex items-center">
-                                    <p class="harga-satuan" data-harga="<?= $row['harga_produk'] ?>">Rp. <?= number_format($row['harga_produk'], 0, ',', '.') ?></p>
-                                </div>
-                                <div class="col-span-2 flex items-center">
-                                    <div class="produxt-button-parent">
-                                        <form action="prosesupdatestokproduk.php" method="post" style="display: inline;">
-                                            <input type="hidden" name="id_produk" value="<?= $row['id_produk'] ?>">
-                                            <input type="hidden" name="aksi" value="kurang">
-                                            <button class="btn-decrease">-</button>
-                                        </form>
-                                        <form action="prosesupdatestokproduk.php" method="post" style="display: inline;">
-                                            <input type="hidden" name="id_produk" value="<?= $row['id_produk'] ?>">
-                                            <input type="hidden" name="aksi" value="tambah">
-                                            <span class="produxt-value" data-qty="<?= $row['stok'] ?>"><?= $row['stok'] ?></span>
-                                            <button class="btn-increase">+</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="col-span-2 flex items-center">
-                                    <p class="deskripsi-per-produk"><?= htmlspecialchars($row['deskripsi_produk']) ?></p>
-                                </div>
-                                <div class="col-span-3 flex items-center justify-end">
-                                    <a href="../kelolaproduk/kelola-produk.php?hapus=<?= $row['id_produk'] ?>" onclick="return confirm('Yakin ingin menghapus produk ini?')"><i class="icon-hapus fa fa-trash "></i></a>
-                                    <a href="../editproduk/edit-produk.php?id=<?= $row['id_produk'] ?>">
-                                        <i class="icon-edit fa fa-edit"></i>
-                                    </a>
-
                                 </div>
                             </div>
-                        <?php
-                        }
-                        ?>
+                            <div class="col-span-2  flex items-center">
+                                <p class="harga-satuan" data-harga="17000">Rp. 17.000</p>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <div class="flex">
+                                    <div class="produxt-button-parent">
+                                        <button class="btn-decrease">-</button>
+                                        <span class="produxt-value" data-qty="2">2</span>
+                                        <button class="btn-increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <p class="deskripsi-per-produk">Lorem ipsum dolor sit.</p>
+                            </div>
+                            <div class="col-span-3  flex items-center justify-end">
+                                <p><i class="icon-hapus fa fa-trash "></i></p>
+                                <p><i class="icon-edit fa fa-edit "></i></p>
 
+                            </div>
+                        </div>
+                        <div class="data-row-tables grid grid-cols-12 gap-4">
+                            <div class="col-span-3 flex items-center justify-start">
+                                <div class="flex justify-start items-center">
+
+                                    <img class="product-img-produxt" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                                    <div class="" style="margin-left: 16px;">
+                                        <p> 001</p>
+                                        <p> Stick kentang</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <p class="harga-satuan" data-harga="17000">Rp. 17.000</p>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <div class="flex">
+                                    <div class="produxt-button-parent">
+                                        <button class="btn-decrease">-</button>
+                                        <span class="produxt-value" data-qty="2">2</span>
+                                        <button class="btn-increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <p class="deskripsi-per-produk">Lorem ipsum dolor sit.</p>
+                            </div>
+                            <div class="col-span-3  flex items-center justify-end">
+                                <p><i class="icon-hapus fa fa-trash "></i></p>
+                                <p><i class="icon-edit fa fa-edit "></i></p>
+
+                            </div>
+                        </div>
+                        <div class="data-row-tables grid grid-cols-12 gap-4">
+                            <div class="col-span-3 flex items-center justify-start">
+                                <div class="flex justify-start items-center">
+
+                                    <img class="product-img-produxt" src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                                    <div class="" style="margin-left: 16px;">
+                                        <p> 001</p>
+                                        <p> Stick kentang</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <p class="harga-satuan" data-harga="17000">Rp. 17.000</p>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <div class="flex">
+                                    <div class="produxt-button-parent">
+                                        <button class="btn-decrease">-</button>
+                                        <span class="produxt-value" data-qty="2">2</span>
+                                        <button class="btn-increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2  flex items-center">
+                                <p class="deskripsi-per-produk">Lorem ipsum dolor sit.</p>
+                            </div>
+                            <div class="col-span-3  flex items-center justify-end">
+                                <p><i class="icon-hapus fa fa-trash "></i></p>
+                                <p><i class="icon-edit fa fa-edit "></i></p>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="card-total-products">
                         <h3>
@@ -380,25 +301,15 @@ if (isset($_GET['hapus'])) {
     </div>
 </body>
 <script>
+  
+
     function formatRupiah(number) {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR'
         }).format(number);
     }
-    const icon = document.getElementById('notifIcon');
-    const dialog = document.getElementById('notifDialog');
-
-    icon.addEventListener('click', function() {
-        dialog.classList.toggle('active');
-    });
-
-    // Optional: Klik di luar akan menutup dialog
-    document.addEventListener('click', function(e) {
-        if (!icon.contains(e.target) && !dialog.contains(e.target)) {
-            dialog.classList.remove('active');
-        }
-    });
+ 
     document.querySelectorAll('.data-row-tables').forEach(row => {
         const btnIncrease = row.querySelector('.btn-increase');
         const btnDecrease = row.querySelector('.btn-decrease');
@@ -407,14 +318,14 @@ if (isset($_GET['hapus'])) {
         btnIncrease.addEventListener('click', () => {
             let current = parseInt(qtyEl.textContent);
             qtyEl.textContent = current + 1;
-
+    
         });
 
         btnDecrease.addEventListener('click', () => {
             let current = parseInt(qtyEl.textContent);
             if (current > 0) {
                 qtyEl.textContent = current - 1;
-
+        
             } else {
 
                 alert('Stok produk telah mencapai 0');

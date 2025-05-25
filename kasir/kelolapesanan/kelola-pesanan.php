@@ -1,33 +1,12 @@
 <?php
 include("../../konfig.php");
 session_start();
-$nama_kasir = $_SESSION['nama_kasir'];
-// Ambil data admin kasir
-$sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
-} else { 
-    header("Location: ../pembeli/dashboard/keranjang.php");
-    exit;
 }
-$cari = isset($_GET['cari']) ? mysqli_real_escape_string($db, $_GET['cari']) : '';
-
-if (!empty($cari)) {
-    $sql_pesanan = "SELECT p.*, pb.username, pb.no_telpon 
-                    FROM tb_pesanan p 
-                    LEFT JOIN tb_pembeli pb ON p.id_pembeli = pb.id_pembeli
-                    WHERE p.status = 'Menunggu' AND p.id_pesanan LIKE '%$cari%'
-                    ORDER BY p.tanggal_pesanan DESC";
-} else {
-    $sql_pesanan = "SELECT p.*, pb.username, pb.no_telpon 
-                    FROM tb_pesanan p 
-                    LEFT JOIN tb_pembeli pb ON p.id_pembeli = pb.id_pembeli
-                    WHERE p.status = 'Menunggu'
-                    ORDER BY p.tanggal_pesanan DESC";
-}
-
-$result_pesanan = mysqli_query($db, $sql_pesanan);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -35,9 +14,6 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 <head>
     <!-- ini gw -->
     <title>Menu Maaaaaaaaaaaakanan</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../../global.css">
     <style>
         html,
         body,
@@ -103,61 +79,9 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         .items-data-pesanan {
             padding: 10px 0px;
         }
-          .notification-icon {
-            position: relative;
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        .notification-icon .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-
-        /* Dialog notifikasi */
-        .notification-dialog {
-            display: none;
-            position: absolute;
-            top: 35px;
-            right: 0;
-            background: white;
-            border: 1px solid #ccc;
-            width: 550px;
-            z-index: 100;
-            border-radius: 20px;
-        }
-
-        .notification-dialog.active {
-            display: block;
-        }
-
-        .notification-dialog p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .notification-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .head-notifikasi {
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            padding: 20px 10px;
-            background-color: #7CAEDF;
-        }
-
-        .notifikasi-content {
-            padding: 10px;
-        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../global.css">
 </head>
 
 <body>
@@ -168,174 +92,248 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
             <div class="right-container">
                 <div class="head-container flex justify-between items-center">
                     <h1 style="font-size: 50px;">Kelola Pesanan</h1>
-                    <?php
-
-                        $sql = "SELECT * FROM tb_notifikasi 
-        WHERE jenis_pengguna = 'adminkasir'
-        ORDER BY tgl_notifikasi DESC 
-        LIMIT 10";
-                        $result = mysqli_query($db, $sql);
-
-                        // Hitung jumlah notifikasi
-                        $jumlahNotif = mysqli_num_rows($result);
-                        ?>
-                        <div class="notification-container">
-                            <i class="fas fa-bell notification-icon" id="notifIcon">
-                                <span class="badge"><?= $jumlahNotif ?></span>
-                            </i>
-
-                            <div class="notification-dialog" id="notifDialog">
-                                <div class="head-notifikasi">
-                                    <h2>Notifikasi</h2>
-                                </div>
-                                <div class="notifikasi-content">
-
-                                    <?php if ($jumlahNotif > 0): ?>
-                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <small>
-                                                <p class="flex">
-                                                    📩 <?= htmlspecialchars($row['deskripsi']) ?>
-                                                    🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
-                                                </p>
-                                            </small>
-                                        <?php endwhile; ?>
-                                    <?php else: ?>
-                                        <p>Tidak ada notifikasi.</p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
+                    <h2>
+                        <a href="../pembeli/dashboard/keranjang.php" class="items-center flex fw-semibold">
+                            Logout
+                            <!-- buat spasi; -- -->
+                            &nbsp;
+                            <span class="">
+                                <i class=" fas fa-sign-out-alt" style="font-size:30px;"></i>
+                            </span>
+                        </a>
+                    </h2>
                 </div>
                 <div class="container-pesaanan">
                     <div class="grid grid-cols-12 gap-4">
-                        <?php if ($result_pesanan && mysqli_num_rows($result_pesanan) > 0): ?> 
-                            <?php
-                            $no = 1;
-                            while ($pesanan = mysqli_fetch_assoc($result_pesanan)) : 
-                                $id_pesanan = $pesanan['id_pesanan'];
-                                $sqlDetail = "SELECT produk.nama_produk, detail.jumlah_item, produk.harga_produk FROM tb_detailpesanan detail
-                                              JOIN tb_produk produk ON detail.id_produk = produk.id_produk
-                                              WHERE detail.id_pesanan = '$id_pesanan'";
-                                $queryDetail = mysqli_query($db, $sqlDetail);
-                                // var_dump($queryDetail);  
-                                $subtotalHitung = 0;
-                            ?>
-                                <div class="col-span-4 pesanan-card-parent">
-                                    <div class="flex justify-between " style="padding: 0px 10px;">
-                                        <div class="pesanan-subcard">
-                                            <h3>No pesanan
-                                                <strong><?= htmlspecialchars($pesanan['id_pesanan']) ?></strong></h3>
-                                        </div>
-                                        <div class="pesanan-subcard">
-                                            <form action="prosescetak.php" method="POST">
-                                                <button type="submit" style=" border:none;cursor:pointer;">
-                                                    <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>"> 
-                                                    <a href="">
-                                                        <h3>CETAK <span><i class="fa fa-print"></i></span></h3>
-                                                    </a>
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="pesanan-subcard">
-                                             <form method="post" action="prosesbatal.php" onsubmit="return confirm('Yakin batalkan pesanan ini?');">
-                                                <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>">
-                                                <button type="submit" style=" border:none;cursor:pointer;">
-                                                   <h3>
-                                                <strong>
-                                                    BATALKAN
-                                                </strong>
-                                                </h3>
-                                                </button>
-                                            </form>
-                                          
-                                        </div>
+                        <div class="col-span-4 pesanan-card-parent">
+                            <div class="flex justify-between " style="padding: 0px 10px;">
+                                <div class="pesanan-subcard">
+                                    <h3>No pesanan
+                                        <strong>
+                                            001
+                                        </strong>
+                                    </h3>
+                                </div>
+                                <div class="pesanan-subcard">
+                                    <h3>CETAK <span><i class="fa fa-print"></i></span></h3>
+                                </div>
+                                 <div class="pesanan-subcard">
+                                     <h3>
+                                        <strong>
+                                            BATALKAN
+                                        </strong>
+                                    </h2>
+                                 </div>
+                            </div>
+                            <div class="pesanan-card">
+                                <div class="head-pesanan-card ">
+                                    <p class="">
+                                        Jl. Es Batu No.45 Indramayu
+                                    </p>
+                                    <p class="">
+                                        No_Telpon : (022) 9876-5432
+                                    </p>
+                                    <p class="">
+                                        Tanggal_pesanan : 23-03-2032
+                                    </p>
+                                    <hr style="margin: 10px 0px;">
+                                </div>
+                                <div class="pembeli-pesanan-card">
+                                    <p>Pembeli : Subroto</p>
+                                    <p>No_pesanan : 00001</p>
+                                    <p>Tanggal_pesanan : 23 maret 2032</p>
+                                    <p>Ambil Pesanan di : Jln LOHBENER No. 45 indramayu</p>
+                                </div>
+                                <hr style="margin: 10px 0px;">
+                                <div class="item-pesanan-card">
+                                    <div class=" items-data-judul flex justify-between items-center gap-4">
+                                        <p>Nama produk:</p>
+                                        <p>Harga:</p>
+                                        <p>Jumlah:</p>
+                                        <p>Total:</p>
                                     </div>
-                                    <div class="pesanan-card">
-                                        <div class="head-pesanan-card ">
-                                            <p class="">
-                                                Jl. Es Batu No.45 Indramayu
-                                            </p>
-                                            <p>No Telpon: <?= htmlspecialchars($pesanan['no_telpon']) ?></p>
-                                            <p>Tanggal Pesanan: <?= date('d-m-Y', strtotime($pesanan['tanggal_pesanan'])) ?></p>
-                                            <hr style="margin: 10px 0px;">
-                                        </div>
-                                        <div class="pembeli-pesanan-card">
-                                             <p>Pembeli: <?= htmlspecialchars($pesanan['username']) ?></p>
-                                            <p>Jumlah Produk: <?= $pesanan['jumlah_produk'] ?></p>
-                                            <p>Jumlah Item: <?= $pesanan['jumlah_item'] ?></p>
-                                            <p>Ambil Pesanan di : Jln LOHBENER No. 45 indramayu</p>
-                                        </div>
-                                        <hr style="margin: 10px 0px;">
-                                        <div class="item-pesanan-card">
-                                            <div class=" items-data-judul flex justify-between items-center gap-4">
-                                                <p>Nama produk:</p>
-                                                <p>Harga:</p>
-                                                <p>Jumlah:</p>
-                                                <p>Total:</p>
-                                            </div>
-                                            <hr style="margin: 10px 0px; ">
-                                             <?php
-                                            if ($queryDetail && mysqli_num_rows($queryDetail) > 0) :
-                                                while ($detail = mysqli_fetch_assoc($queryDetail)) :
-                                                    $totalItem = $detail['harga_produk'] * $detail['jumlah_item'];
-                                                    $subtotalHitung += $totalItem;
-                                            ?>
-                                                    <div class="items-data-pesanan flex justify-between items-center gap-4">
-                                                        <p><?php echo htmlspecialchars($detail['nama_produk']); ?></p>
-                                                        <p>Rp.<?php echo number_format($detail['harga_produk'], 0, ',', '.'); ?></p>
-                                                        <p><?php echo $detail['jumlah_item']; ?></p>
-                                                        <p>Rp.<?php echo number_format($totalItem, 0, ',', '.'); ?></p>
-                                                    </div>
-                                            <?php
-                                                endwhile;
-                                            endif;
-                                            ?>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <div class="footer-card-pesanan">
-                                            <hr style="margin: 10px 0; border: 1px solid #999999;">
-                                            <br>
-                                            <br>
-                                            <br>
-                                            <div class="flex justify-between items-center">
-                                                <p>Subtotal: </p>
-                                             <p>Rp.<?php echo number_format($pesanan['subtotal'], 0, ',', '.'); ?></p>
-                                            </div>
-                                            <br>
-                                            <hr style="margin: 10px 0px;height:4px; ">
-                                            <p class="text-center">Terima Kasih & Sampai Jumpa!</p>
-                                        </div>
-
+                                    <hr style="margin: 10px 0px; ">
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
                                     </div>
                                 </div>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <p class="col-span-12 text-center">Belum ada pesanan.</p>
-                        <?php endif; ?>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <div class="footer-card-pesanan">
+                                    <hr style="margin: 10px 0; border: 1px solid #999999;">
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <div class="flex justify-between items-center">
+                                        <p>Subtotal: </p>
+                                        <p>Rp.500.000</p>
+                                    </div>
+                                    <br>
+                                    <hr style="margin: 10px 0px;height:4px; ">
+                                    <p class="text-center">Terima Kasih & Sampai Jumpa!</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-span-4 pesanan-card-parent">
+                            <div class="pesanan-subcard">
+                                <h1>No 1</h1>
+                            </div>
+                            <div class="pesanan-card">
+                                <div class="head-pesanan-card ">
+                                    <p class="">
+                                        Jl. Es Batu No.45 Indramayu
+                                    </p>
+                                    <p class="">
+                                        No_Telpon : (022) 9876-5432
+                                    </p>
+                                    <p class="">
+                                        Tanggal_pesanan : 23-03-2032
+                                    </p>
+                                    <hr style="margin: 10px 0px;">
+                                </div>
+                                <div class="pembeli-pesanan-card">
+                                    <p>Pembeli : Subroto</p>
+                                    <p>No_pesanan : 00001</p>
+                                    <p>Tanggal_pesanan : 23 maret 2032</p>
+                                    <p>Ambil Pesanan di : Jln LOHBENER No. 45 indramayu</p>
+                                </div>
+                                <hr style="margin: 10px 0px;">
+                                <div class="item-pesanan-card">
+                                    <div class=" items-data-judul flex justify-between items-center gap-4">
+                                        <p>Nama produk:</p>
+                                        <p>Harga:</p>
+                                        <p>Jumlah:</p>
+                                        <p>Total:</p>
+                                    </div>
+                                    <hr style="margin: 10px 0px; ">
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <div class="footer-card-pesanan">
+                                    <hr style="margin: 10px 0; border: 1px solid #999999;">
+                                    <div class="flex justify-between items-center">
+                                        <p>Subtotal: </p>
+                                        <p>Rp.500.000</p>
+                                    </div>
+                                    <hr style="margin: 10px 0px;height:4px; ">
+                                    <p>Terima Kasih & Sampai Jumpa!</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-span-4 pesanan-card-parent">
+                            <div class="pesanan-subcard">
+                                <h1>No 1</h1>
+                            </div>
+                            <div class="pesanan-card">
+                                <div class="head-pesanan-card ">
+                                    <p class="">
+                                        Jl. Es Batu No.45 Indramayu
+                                    </p>
+                                    <p class="">
+                                        No_Telpon : (022) 9876-5432
+                                    </p>
+                                    <p class="">
+                                        Tanggal_pesanan : 23-03-2032
+                                    </p>
+                                    <hr style="margin: 10px 0px;">
+                                </div>
+                                <div class="pembeli-pesanan-card">
+                                    <p>Pembeli : Subroto</p>
+                                    <p>No_pesanan : 00001</p>
+                                    <p>Tanggal_pesanan : 23 maret 2032</p>
+                                    <p>Ambil Pesanan di : Jln LOHBENER No. 45 indramayu</p>
+                                </div>
+                                <hr style="margin: 10px 0px;">
+                                <div class="item-pesanan-card">
+                                    <div class=" items-data-judul flex justify-between items-center gap-4">
+                                        <p>Nama produk:</p>
+                                        <p>Harga:</p>
+                                        <p>Jumlah:</p>
+                                        <p>Total:</p>
+                                    </div>
+                                    <hr style="margin: 10px 0px; ">
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                    <div class=" items-data-pesanan flex justify-between items-center gap-4">
+                                        <p>Dumpling Keju</p>
+                                        <p>Rp.20.000</p>
+                                        <p>900</p>
+                                        <p>Rp.900.000</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <div class="footer-card-pesanan">
+                                    <hr style="margin: 10px 0; border: 1px solid #999999;">
+                                    <div class="flex justify-between items-center">
+                                        <p>Subtotal: </p>
+                                        <p>Rp.500.000</p>
+                                    </div>
+                                    <hr style="margin: 10px 0px;height:4px; ">
+                                    <p>Terima Kasih & Sampai Jumpa!</p>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-         const icon = document.getElementById('notifIcon');
-    const dialog = document.getElementById('notifDialog');
-
-    icon.addEventListener('click', function() {
-        dialog.classList.toggle('active');
-    });
-
-    // Optional: Klik di luar akan menutup dialog
-    document.addEventListener('click', function(e) {
-        if (!icon.contains(e.target) && !dialog.contains(e.target)) {
-            dialog.classList.remove('active');
-        }
-    });
-    </script>
 </body>
 
 </html>

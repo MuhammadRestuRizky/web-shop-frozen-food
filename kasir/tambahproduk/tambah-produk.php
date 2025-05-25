@@ -1,8 +1,8 @@
 <?php
 include("../../konfig.php");
 session_start();
-$nama_kasir = $_SESSION['nama_kasir'];
-$sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
@@ -36,8 +36,7 @@ if ($query && mysqli_num_rows($query) > 0) {
         .head-container {
             padding: 20px 40px;
         }
-
-        .right-container {
+        .right-container{
             /* height: inherit; */
         }
 
@@ -51,7 +50,6 @@ if ($query && mysqli_num_rows($query) > 0) {
         .h-vhfull {
             height: 100vh;
         }
-
         .link-product>a {
             font-weight: 400;
             color: #2a8df4;
@@ -99,27 +97,23 @@ if ($query && mysqli_num_rows($query) > 0) {
         #fileInput {
             display: none;
         }
-
-        .input-tambah {
+        .input-tambah{
             background: #ffffff;
-
+         
             padding: 10px;
             border-radius: 16px;
             border: none;
         }
-
-        .btn-tambah {
+        .btn-tambah{
             border-radius: 16px;
-            padding: 14px 40px;
-            border: none;
+            padding:14px 40px;
+            border:none;
         }
-
-        .btn-batal {
+        .btn-batal{
             background-color: #C71515;
             margin-right: 20px;
         }
-
-        .btn-simpan {
+        .btn-simpan{
             background-color: #4FC965;
             margin-right: 20px;
         }
@@ -135,75 +129,75 @@ if ($query && mysqli_num_rows($query) > 0) {
         <div class="col-span-10">
             <div class="right-container">
                 <div class="head-container">
-                    <h1 style="font-size: 50px;">Tambah Produk</h1>
+                    <h1 style="font-size: 50px;">Tambah Produk</h1> 
                 </div>
                 <div class="container-product">
                     <div class="card-product">
-                        <form action="prosestambahproduk.php" method="POST" enctype="multipart/form-data">
-                            <div class="grid grid-cols-12 gap-4">
-                                <div class="col-span-2">
-                                    <h2 class="fw-medium">Foto Produk: </h2>
-                                </div>
-                                <div class="col-span-10">
-                                    <div class="image-upload" id="imageUpload" onclick="document.getElementById('fileInput').click()">
-                                        <!-- Ikon tambah -->
-                                        <i class="fa fa-plus" style="font-size:180px;color:#79AEE0;"></i>
-                                    </div>
-                                    <!-- Input file disembunyikan -->
-                                    <input type="file" name="image_produk" id="fileInput" accept="image/*" onchange="previewImage(event)">
-                                    <!-- </div> -->
-                                    <img id="imgpreview" src="#" alt="Preview" style="display: none;" />
-                                </div>
-                                <div class="col-span-2">
-                                    <h2 class="fw-medium">Nama Produk: </h2>
-                                </div>
-                                <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="text" class="input-tambah" style="width:40%;" name="nama_produk" placeholder="Masukkan nama produk">
-                                    </h2>
-                                </div>
-                                <div class="col-span-2">
-                                    <h2 class="fw-medium">Harga: </h2>
-                                </div>
-                                <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="number" style="width:36%;" class="input-tambah" name="harga_produk" placeholder="Masukkan harga produk">
-                                    </h2>
-                                </div>
-                                <div class="col-span-2">
-                                    <h2 class="fw-medium">Stok: </h2>
-                                </div>
-                                <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="number" style="width:10%;" class="input-tambah" name="stok" placeholder="Masukkan stok produk">
-                                    </h2>
-                                </div>
-                                <div class="col-span-2">
-                                    <h2 class="fw-medium">Deskripsi: </h2>
-                                </div>
-                                <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="text" style="width:100%;" class="input-tambah" name="deskripsi_produk" placeholder="Masukkan deskripsi produk">
-                                    </h2>
-                                </div>
-                                <br>
-                                <div class="col-span-12 flex justify-end">
-                                    <button class="btn-tambah btn-batal">
-                                        <a href="../pembeli/tambahproduk/tambah-produk.php" class="">
-                                            <h2>Batal</h2>
-                                        </a>
-                                    </button>
-                                    <button class="btn-tambah btn-simpan">
-                                        <a href="../pembeli/tambahproduk/tambah-produk.php" class="flex items-center">
-                                            <h2>Simpan</h2>
-                                            &nbsp;
-                                            <i class="fa fa-arrow-up" style="font-size: 20px;"></i>
-                                        </a>
-                                    </button>
-                                </div>
+                        <div class="grid grid-cols-12 gap-4">
+                            <div class="col-span-2">
+                                <h2 class="fw-medium">Foto Produk: </h2>
                             </div>
+                            <div class="col-span-10">
+                                <div class="image-upload" id="imageUpload" onclick="document.getElementById('fileInput').click()">
+                                    <!-- Ikon tambah -->
+                                    <i class="fa fa-plus" style="font-size:180px;color:#79AEE0;"></i>
+                                </div>
+                                <!-- Input file disembunyikan -->
+                                <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+                                <!-- </div> -->
+                                <img id="imgpreview" src="#" alt="Preview" style="display: none;" />
+                                <!-- Input file disembunyikan -->
+                                <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                            <div class="col-span-2">
+                                <h2 class="fw-medium">Nama Produk: </h2>
+                            </div>
+                            <div class="col-span-10">
+                                <h2 class="fw-medium">
+                                    <input type="text" class="input-tambah"  style="width:40%;" name="nama_produk" >
+                                </h2>
+                            </div>
+                            <div class="col-span-2">
+                                <h2 class="fw-medium">Harga: </h2>
+                            </div>
+                            <div class="col-span-10">
+                                <h2 class="fw-medium">
+                                    <input type="number" style="width:36%;"  class="input-tambah" name="harga_produk" >
+                                </h2>
+                            </div>
+                            <div class="col-span-2">
+                                <h2 class="fw-medium">Stok: </h2>
+                            </div>
+                            <div class="col-span-10">
+                                <h2 class="fw-medium">
+                                    <input type="number" style="width:10%;"  class="input-tambah" name="stok" >
+                                </h2>
+                            </div>
+                            <div class="col-span-2">
+                                <h2 class="fw-medium">Deskripsi: </h2>
+                            </div>
+                            <div class="col-span-10">
+                                <h2 class="fw-medium">
+                                    <input type="text" style="width:100%;" class="input-tambah" name="deskripsi_produk" >
+                                </h2>
+                            </div>
+                            <br>
+                            <div class="col-span-12 flex justify-end">
+                                <button class="btn-tambah btn-batal"> 
+                                    <a href="../pembeli/kelolaproduk/kelola-produk.php" class="">
+                                        <h2>Batal</h2>
+                                    </a>
+                                </button>
+                                <button class="btn-tambah btn-simpan"> 
+                                    <a href="../pembeli/kelolaproduk/kelola-produk.php" class="flex items-center">
+                                        <h2>Simpan</h2>
+                                        &nbsp;
+                                        <i class="fa fa-arrow-up" style="font-size: 20px;"></i>
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>

@@ -6,11 +6,11 @@ $sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
   $user = mysqli_fetch_assoc($query);
+
 }
 ?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <!-- ini gw -->
   <title>Menu Maaaaaaaaaaaakanan</title>
@@ -36,7 +36,7 @@ if ($query && mysqli_num_rows($query) > 0) {
     .head-container {
       padding: 20px 40px;
     }
-
+    
     .container-product {
       background: white;
       padding: 20px 40px;
@@ -62,7 +62,7 @@ if ($query && mysqli_num_rows($query) > 0) {
     }
 
 
-    .stok-button-parent {
+      .stok-button-parent {
       display: flex;
       align-items: center;
       gap: 5px;
@@ -75,7 +75,7 @@ if ($query && mysqli_num_rows($query) > 0) {
       height: 25px;
       font-size: 20px;
       font-weight: bold;
-
+      
       background-color: #1677FF;
       color: #f1f1f1;
       border: none;
@@ -90,66 +90,8 @@ if ($query && mysqli_num_rows($query) > 0) {
       text-align: center;
       display: inline-block;
     }
-
-    .stok-value {
+    .stok-value{
       font-weight: 600;
-    }
-
-    /* Icon notifikasi */
-    .notification-icon {
-      position: relative;
-      font-size: 30px;
-      cursor: pointer;
-    }
-
-    .notification-icon .badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: red;
-      color: white;
-      border-radius: 50%;
-      padding: 2px 6px;
-      font-size: 12px;
-    }
-
-    /* Dialog notifikasi */
-    .notification-dialog {
-      display: none;
-      position: absolute;
-      top: 35px;
-      right: 0;
-      background: white;
-      border: 1px solid #ccc;
-      width: 550px;
-      z-index: 100;
-      border-radius: 20px;
-    }
-
-    .notification-dialog.active {
-      display: block;
-    }
-
-    .notification-dialog p {
-      margin: 5px 0;
-      font-size: 14px;
-      font-weight: 400 !important;
-    }
-
-    .notification-container {
-      position: relative;
-      display: inline-block;
-    }
-
-    .head-notifikasi {
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      padding: 20px 10px;
-      background-color: #7CAEDF;
-    }
-
-    .notifikasi-content {
-      padding: 10px;
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -159,145 +101,175 @@ if ($query && mysqli_num_rows($query) > 0) {
 <body>
   <div class="grid grid-cols-12 h-vhfull">
 
-    <?php include '../../component/sidebar-pembeli.php'; ?>
+    <?php include '../../component/sidebar-pembeli.php';?>
     <div class="col-span-10">
       <div class="right-container">
         <div class="head-container flex justify-between items-center">
           <h1 style="font-size: 50px;">Beranda</h1>
           <h2>
-            <div class="flex items-center">
-              <?php
-              $id_pembeli = $user['id_pembeli'];
-              $sql = "SELECT * FROM tb_notifikasi 
-                WHERE jenis_pengguna = 'pembeli' 
-                AND id_pengguna = '$id_pembeli' 
-                ORDER BY tgl_notifikasi DESC 
-                LIMIT 10";
-              $result = mysqli_query($db, $sql);
-
-              // Hitung jumlah notifikasi
-              $jumlahNotif = mysqli_num_rows($result);
-              ?>
-              <div class="notification-container">
-                <i class="fas fa-bell notification-icon" id="notifIcon">
-                  <span class="badge"><?= $jumlahNotif ?></span>
-                </i>
-
-                <div class="notification-dialog" id="notifDialog">
-                  <div class="head-notifikasi">
-                    <h2>Notifikasi</h2>
-                  </div>
-                  <div class="notifikasi-content">
-                    <?php if ($jumlahNotif > 0): ?>
-                      <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                        <small>
-                          <p class="flex">
-                            📩 <?= htmlspecialchars($row['deskripsi']) ?>
-                            🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
-                          </p>
-                        </small>
-                      <?php endwhile; ?>
-                    <?php else: ?>
-                      <p>Tidak ada notifikasi.</p>
-                    <?php endif; ?>
-                  </div>
-                </div>
-              </div>
-
+           <a href="../pembeli/dashboard/keranjang.php" class="items-center flex fw-semibold">
+             Logout
+             <!-- buat spasi; -- -->
               &nbsp;
-              &nbsp;
-              <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
-                <button type="submit" name="logout" class="items-center flex fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:28px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
-                  Logout&nbsp;
-                  <span>
-                    <i class="fas fa-sign-out-alt" style="font-size:30px;"></i>
-                  </span>
-                </button>
-              </form>
-
-              
-
-            </div>
+            <span class="">
+              <i class=" fas fa-sign-out-alt" style="font-size:30px;"></i>
+            </span>
+            </a>
           </h2>
         </div>
         <div class="container-product">
-          <?php
-          $keyword = isset($_GET['search']) ? mysqli_real_escape_string($db, $_GET['search']) : '';
-          if ($keyword != '') {
-            $sql_produk = "SELECT * FROM tb_produk WHERE 
-                   nama_produk LIKE '%$keyword%' OR 
-                   deskripsi_produk LIKE '%$keyword%'";
-          } else {
-            $sql_produk = "SELECT * FROM tb_produk";
-          }
-          $query_produk = mysqli_query($db, $sql_produk);
-          ?>
-
           <div class="grid grid-cols-12 gap-4">
-            <?php while ($produk = mysqli_fetch_assoc($query_produk)) : ?>
-              <?php
-              $id_pembeli = $user['id_pembeli'];
-              $id_produk = $produk['id_produk'];
-
-              // Cek apakah sudah di keranjang
-              $sql_cek = "SELECT jumlah_item FROM tb_keranjang
-                  WHERE id_pembeli = $id_pembeli 
-                  AND id_produk = $id_produk";
-              $cek_result = mysqli_query($db, $sql_cek);
-              $row_qty = mysqli_fetch_assoc($cek_result);
-              $qty = $row_qty['jumlah_item'] ?? 0;
-              ?>
-
-              <div class="col-span-2">
-                <div class="card-product">
-                  <img src="../../img/produkImg/<?= htmlspecialchars($produk['image_produk']) ?>" alt="<?= htmlspecialchars($produk['nama_produk']) ?>">
-                  <p style="margin-bottom:8px;"><?= htmlspecialchars($produk['nama_produk']) ?></p>
-                  <p>Rp. <?= number_format($produk['harga_produk'], 0, ',', '.') ?></p>
-                  <div class="flex" style="justify-content: end;">
-                    <div class="stok-button-parent">
-                      <form method="POST" action="prosesdetailpesanan.php" style="display:inline">
-                        <input type="hidden" name="id_produk" value="<?= $id_produk ?>">
-                        <input type="hidden" name="aksi" value="kurang">
-                        <button class="btn-decrease" <?= $qty <= 0 ? 'disabled' : '' ?>>-</button>
-                      </form>
-
-                      <span class="stok-value"><?= $qty ?></span>
-
-                      <?php if ($qty == 0): ?>
-                        <form method="POST" action="prosesdetailpesanan.php" style="display:inline">
-                          <input type="hidden" name="id_produk" value="<?= $id_produk ?>">
-                          <input type="hidden" name="aksi" value="tambah">
-                          <button class="btn-increase">+</button>
-                        </form>
-                      <?php else: ?>
-                        <button class="btn-increase" disabled>+</button>
-                      <?php endif; ?>
-                    </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/sosis.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Sosis</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
                   </div>
                 </div>
               </div>
-            <?php endwhile; ?>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/rolade.jpeg" alt="" srcset="" max-width="180px">
+                <p style="margin-bottom:8px;">Rolade</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/smokedbeef.jpg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Smoked Beef</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/dumplingkeju.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Dumpling Keju</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/nugget.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Nugget</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/kentanggoreng.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Kentang Goreng</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/sosis.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Fish Rol</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/sosis.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Fish Rol</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-2">
+              <div class="card-product">
+                <img src="../../img/sosis.jpeg" alt="" srcset="" max-width="200px">
+                <p style="margin-bottom:8px;">Fish Rol</p>
+                <p>Rp. 18.000</p>
+                <div class="flex" style="justify-content: end;">
+                  <div class="stok-button-parent">
+                    <button class="btn-decrease">-</button>
+                    <span class="stok-value">2
+                      
+                    </span>
+                    <button class="btn-increase">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </body>
 <script>
-  const icon = document.getElementById('notifIcon');
-  const dialog = document.getElementById('notifDialog');
-
-  icon.addEventListener('click', function() {
-    dialog.classList.toggle('active');
-  });
-
-  // Optional: Klik di luar akan menutup dialog
-  document.addEventListener('click', function(e) {
-    if (!icon.contains(e.target) && !dialog.contains(e.target)) {
-      dialog.classList.remove('active');
-    }
-  });
   document.querySelectorAll('.card-product').forEach(card => {
     const btnIncrease = card.querySelector('.btn-increase');
     const btnDecrease = card.querySelector('.btn-decrease');

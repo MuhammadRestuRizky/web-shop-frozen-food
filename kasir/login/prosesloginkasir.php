@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $user = mysqli_fetch_assoc($query);
         // print_r($user);
         $_SESSION['nama_kasir'] = $user['nama_kasir'];
-        header("Location: ../kelolaproduk/kelola-produk.php");
+        header("Location: menukasir.php?status=login_berhasil");
         exit;
     } else {
         header("Location: login-kasir.php?status=gagal_login");

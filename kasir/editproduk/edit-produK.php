@@ -7,13 +7,20 @@ $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
 }
+
+// Ambil data produk dari database
+$id_produk = $_GET['id'];
+$sql_produk = "SELECT * FROM tb_produk WHERE id_produk = '$id_produk'";
+$query_produk = mysqli_query($db, $sql_produk);
+$produk = mysqli_fetch_assoc($query_produk);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
-    <!-- ini gw -->
-    <title>Menu Maaaaaaaaaaaakanan</title>
+    <title>Edit Produk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../global.css">
     <style>
         html,
         body,
@@ -124,86 +131,71 @@ if ($query && mysqli_num_rows($query) > 0) {
             margin-right: 20px;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../../global.css">
 </head>
 
 <body>
     <div class="grid grid-cols-12 h-vhfull">
-
         <?php include '../../component/sidebar-admin.php'; ?>
         <div class="col-span-10">
             <div class="right-container">
                 <div class="head-container">
-                    <h1 style="font-size: 50px;">Tambah Produk</h1>
+                    <h1 style="font-size: 50px;">Edit Produk</h1>
                 </div>
                 <div class="container-product">
                     <div class="card-product">
-                        <form action="prosestambahproduk.php" method="POST" enctype="multipart/form-data">
+                        <form action="proseseditproduk.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="id_produk" value="<?= $produk['id_produk']; ?>">
                             <div class="grid grid-cols-12 gap-4">
                                 <div class="col-span-2">
                                     <h2 class="fw-medium">Foto Produk: </h2>
                                 </div>
                                 <div class="col-span-10">
-                                    <div class="image-upload" id="imageUpload" onclick="document.getElementById('fileInput').click()">
-                                        <!-- Ikon tambah -->
+                                    <div class="image-upload has-image"
+                                        id="imageUpload"
+                                        data-oldimage="../../img/produk/<?= $produk['image_produk']; ?>"
+                                        onclick="document.getElementById('fileInput').click()"
+                                        style="background-image: url('../../img/produkimg/<?= $produk['image_produk']; ?>');">
                                         <i class="fa fa-plus" style="font-size:180px;color:#79AEE0;"></i>
                                     </div>
-                                    <!-- Input file disembunyikan -->
+
                                     <input type="file" name="image_produk" id="fileInput" accept="image/*" onchange="previewImage(event)">
-                                    <!-- </div> -->
-                                    <img id="imgpreview" src="#" alt="Preview" style="display: none;" />
                                 </div>
                                 <div class="col-span-2">
                                     <h2 class="fw-medium">Nama Produk: </h2>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="text" class="input-tambah" style="width:40%;" name="nama_produk" placeholder="Masukkan nama produk">
-                                    </h2>
+                                    <input type="text" class="input-tambah" style="width:40%;" name="nama_produk" value="<?= $produk['nama_produk']; ?>">
                                 </div>
                                 <div class="col-span-2">
                                     <h2 class="fw-medium">Harga: </h2>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="number" style="width:36%;" class="input-tambah" name="harga_produk" placeholder="Masukkan harga produk">
-                                    </h2>
+                                    <input type="number" class="input-tambah" style="width:36%;" name="harga_produk" value="<?= $produk['harga_produk']; ?>">
                                 </div>
                                 <div class="col-span-2">
                                     <h2 class="fw-medium">Stok: </h2>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="number" style="width:10%;" class="input-tambah" name="stok" placeholder="Masukkan stok produk">
-                                    </h2>
+                                    <input type="number" class="input-tambah" style="width:10%;" name="stok" value="<?= $produk['stok']; ?>">
                                 </div>
                                 <div class="col-span-2">
                                     <h2 class="fw-medium">Deskripsi: </h2>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
-                                        <input type="text" style="width:100%;" class="input-tambah" name="deskripsi_produk" placeholder="Masukkan deskripsi produk">
-                                    </h2>
+                                    <input type="text" class="input-tambah" style="width:100%;" name="deskripsi_produk" value="<?= $produk['deskripsi_produk']; ?>">
                                 </div>
-                                <br>
-                                <div class="col-span-12 flex justify-end">
-                                    <button class="btn-tambah btn-batal">
-                                        <a href="../pembeli/tambahproduk/tambah-produk.php" class="">
-                                            <h2>Batal</h2>
-                                        </a>
+                                <div class="col-span-12 flex justify-end mt-4">
+                                    <button type="button" onclick="history.back()" class="btn-tambah btn-batal">
+                                        <h2>Batal</h2>
                                     </button>
-                                    <button class="btn-tambah btn-simpan">
-                                        <a href="../pembeli/tambahproduk/tambah-produk.php" class="flex items-center">
-                                            <h2>Simpan</h2>
-                                            &nbsp;
-                                            <i class="fa fa-arrow-up" style="font-size: 20px;"></i>
-                                        </a>
+                                    <button type="submit" class="btn-tambah btn-simpan">
+                                        <h2>Update</h2>
+                                        &nbsp;<i class="fa fa-save" style="font-size: 20px;"></i>
                                     </button>
                                 </div>
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -211,14 +203,19 @@ if ($query && mysqli_num_rows($query) > 0) {
     <script>
         function previewImage(event) {
             const file = event.target.files[0];
+            const imageUploadDiv = document.getElementById('imageUpload');
+
             if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const imageUploadDiv = document.getElementById('imageUpload');
                     imageUploadDiv.style.backgroundImage = `url('${e.target.result}')`;
                     imageUploadDiv.classList.add('has-image');
                 };
                 reader.readAsDataURL(file);
+            } else {
+                // fallback: tampilkan gambar lama
+                const oldImage = imageUploadDiv.getAttribute('data-oldimage');
+                imageUploadDiv.style.backgroundImage = `url('${oldImage}')`;
             }
         }
     </script>

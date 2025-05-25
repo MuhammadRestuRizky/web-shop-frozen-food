@@ -7,26 +7,16 @@ $sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
-} else { 
+} else {
+    // redirect atau logout jika tidak valid
     header("Location: ../pembeli/dashboard/keranjang.php");
     exit;
 }
-$cari = isset($_GET['cari']) ? mysqli_real_escape_string($db, $_GET['cari']) : '';
-
-if (!empty($cari)) {
-    $sql_pesanan = "SELECT p.*, pb.username, pb.no_telpon 
-                    FROM tb_pesanan p 
-                    LEFT JOIN tb_pembeli pb ON p.id_pembeli = pb.id_pembeli
-                    WHERE p.status = 'Menunggu' AND p.id_pesanan LIKE '%$cari%'
-                    ORDER BY p.tanggal_pesanan DESC";
-} else {
-    $sql_pesanan = "SELECT p.*, pb.username, pb.no_telpon 
-                    FROM tb_pesanan p 
-                    LEFT JOIN tb_pembeli pb ON p.id_pembeli = pb.id_pembeli
-                    WHERE p.status = 'Menunggu'
-                    ORDER BY p.tanggal_pesanan DESC";
-}
-
+$sql_pesanan = "SELECT p.*, pb.username, pb.no_telpon 
+                FROM tb_pesanan p 
+                LEFT JOIN tb_pembeli pb ON p.id_pembeli = pb.id_pembeli
+                WHERE p.status = 'Dicetak'
+                ORDER BY p.tanggal_pesanan DESC";
 $result_pesanan = mysqli_query($db, $sql_pesanan);
 ?>
 <!DOCTYPE html>
@@ -35,9 +25,6 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 <head>
     <!-- ini gw -->
     <title>Menu Maaaaaaaaaaaakanan</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../../global.css">
     <style>
         html,
         body,
@@ -158,6 +145,8 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
             padding: 10px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../global.css">
 </head>
 
 <body>
@@ -168,7 +157,8 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
             <div class="right-container">
                 <div class="head-container flex justify-between items-center">
                     <h1 style="font-size: 50px;">Kelola Pesanan</h1>
-                    <?php
+                 
+                     <?php
 
                         $sql = "SELECT * FROM tb_notifikasi 
         WHERE jenis_pengguna = 'adminkasir'
@@ -211,13 +201,18 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                         <?php if ($result_pesanan && mysqli_num_rows($result_pesanan) > 0): ?> 
                             <?php
                             $no = 1;
-                            while ($pesanan = mysqli_fetch_assoc($result_pesanan)) : 
+                            while ($pesanan = mysqli_fetch_assoc($result_pesanan)) :
+
                                 $id_pesanan = $pesanan['id_pesanan'];
                                 $sqlDetail = "SELECT produk.nama_produk, detail.jumlah_item, produk.harga_produk FROM tb_detailpesanan detail
                                               JOIN tb_produk produk ON detail.id_produk = produk.id_produk
                                               WHERE detail.id_pesanan = '$id_pesanan'";
                                 $queryDetail = mysqli_query($db, $sqlDetail);
-                                // var_dump($queryDetail);  
+                                // var_dump($queryDetail); 
+                              
+
+
+
                                 $subtotalHitung = 0;
                             ?>
                                 <div class="col-span-4 pesanan-card-parent">
@@ -225,30 +220,8 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                         <div class="pesanan-subcard">
                                             <h3>No pesanan
                                                 <strong><?= htmlspecialchars($pesanan['id_pesanan']) ?></strong></h3>
-                                        </div>
-                                        <div class="pesanan-subcard">
-                                            <form action="prosescetak.php" method="POST">
-                                                <button type="submit" style=" border:none;cursor:pointer;">
-                                                    <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>"> 
-                                                    <a href="">
-                                                        <h3>CETAK <span><i class="fa fa-print"></i></span></h3>
-                                                    </a>
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <div class="pesanan-subcard">
-                                             <form method="post" action="prosesbatal.php" onsubmit="return confirm('Yakin batalkan pesanan ini?');">
-                                                <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>">
-                                                <button type="submit" style=" border:none;cursor:pointer;">
-                                                   <h3>
-                                                <strong>
-                                                    BATALKAN
-                                                </strong>
-                                                </h3>
-                                                </button>
-                                            </form>
-                                          
-                                        </div>
+                                            </div>
+                                            <strong><?= htmlspecialchars($pesanan['status']==='Dicetak'?'Berhasil':'gagal') ?></strong></h3>
                                     </div>
                                     <div class="pesanan-card">
                                         <div class="head-pesanan-card ">

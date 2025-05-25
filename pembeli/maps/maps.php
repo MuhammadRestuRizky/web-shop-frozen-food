@@ -58,6 +58,61 @@ if ($query && mysqli_num_rows($query) > 0) {
     .fw-regular{
         font-weight: 400;
     }
+      .notification-icon {
+      position: relative;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .notification-icon .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    /* Dialog notifikasi */
+    .notification-dialog {
+      display: none;
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      width: 550px;
+      z-index: 100;
+      border-radius: 20px;
+    }
+
+    .notification-dialog.active {
+      display: block;
+    }
+
+    .notification-dialog p {
+      margin: 5px 0;
+      font-size: 14px;
+      font-weight: 400 !important;
+    }
+
+    .notification-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .head-notifikasi {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 20px 10px;
+      background-color: #7CAEDF;
+    }
+
+    .notifikasi-content {
+      padding: 10px;
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../../global.css">
@@ -69,17 +124,60 @@ if ($query && mysqli_num_rows($query) > 0) {
     <?php include '../../component/sidebar-pembeli.php';?>
     <div class="col-span-10">
       <div class="right-container">
-        <div class="head-container flex justify-between items-center">
-          <h1 style="font-size: 50px;">Beranda</h1>
+           <div class="head-container flex justify-between items-center">
+          <h1 style="font-size: 50px;">Maps</h1>
           <h2>
-           <a href="../pembeli/dashboard/keranjang.php" class="items-center flex fw-semibold">
-             Logout
-             <!-- buat spasi; -- -->
+            <div class="flex items-center">
+              <?php
+              $id_pembeli = $user['id_pembeli'];
+              $sql = "SELECT * FROM tb_notifikasi 
+                WHERE jenis_pengguna = 'pembeli' 
+                AND id_pengguna = '$id_pembeli' 
+                ORDER BY tgl_notifikasi DESC 
+                LIMIT 10";
+              $result = mysqli_query($db, $sql);
+
+              // Hitung jumlah notifikasi
+              $jumlahNotif = mysqli_num_rows($result);
+              ?>
+              <div class="notification-container">
+                <i class="fas fa-bell notification-icon" id="notifIcon">
+                  <span class="badge"><?= $jumlahNotif ?></span>
+                </i>
+
+                <div class="notification-dialog" id="notifDialog">
+                  <div class="head-notifikasi">
+                    <h2>Notifikasi</h2>
+                  </div>
+                  <div class="notifikasi-content">
+                    <?php if ($jumlahNotif > 0): ?>
+                      <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                        <small>
+                          <p class="flex">
+                            📩 <?= htmlspecialchars($row['deskripsi']) ?>
+                            🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
+                          </p>
+                        </small>
+                      <?php endwhile; ?>
+                    <?php else: ?>
+                      <p>Tidak ada notifikasi.</p>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </div>
+
               &nbsp;
-            <span class="">
-              <i class=" fas fa-sign-out-alt" style="font-size:30px;"></i>
-            </span>
-            </a>
+              &nbsp;
+               <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
+                <button type="submit" name="logout" class="items-center flex fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:28px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+                  Logout&nbsp;
+                  <span>
+                    <i class="fas fa-sign-out-alt" style="font-size:30px;"></i>
+                  </span>
+                </button>
+              </form>
+
+            </div>
           </h2>
         </div>
         <div class="container-maps">
@@ -115,6 +213,21 @@ if ($query && mysqli_num_rows($query) > 0) {
       </div>
     </div>
   </div>
+  <script>
+           const icon = document.getElementById('notifIcon');
+    const dialog = document.getElementById('notifDialog');
+
+    icon.addEventListener('click', function() {
+        dialog.classList.toggle('active');
+    });
+
+    // Optional: Klik di luar akan menutup dialog
+    document.addEventListener('click', function(e) {
+        if (!icon.contains(e.target) && !dialog.contains(e.target)) {
+            dialog.classList.remove('active');
+        }
+    });
+  </script>
 </body> 
 
 </html>

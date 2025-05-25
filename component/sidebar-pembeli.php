@@ -1,3 +1,12 @@
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
+$query = mysqli_query($db, $sql);
+if ($query && mysqli_num_rows($query) > 0) {
+    $user = mysqli_fetch_assoc($query);
+}
+?>
 <style>
   .sidebar-parent {
 
@@ -55,15 +64,14 @@
     justify-content: center;
   }
 
-  .profile-user-icon {
+  .profile-user-icon img{
     background-color: white !important;
-    border-radius: 50%;
-    margin-right: 8px;
+    border-radius: 50px;
+    /* margin-right: 8px; */
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    object-fit: cover;
   }
 
   .sidebar-icon svg {
@@ -102,14 +110,28 @@
     border-bottom-right-radius: 20px !important;
     border-top-right-radius: 20px !important;
   }
+  .username-ellipsis {
+  display: inline-block;
+  max-width:1000px; /* Atur sesuai kebutuhan */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 </style>
 <div class="col-span-2 sidebar-parent">
   <div class="profil-parent align-items-center padding-sidebar">
     <a href="../profil-pembeli/profil_pembeli.php" class="link-sidebar align-items-center flex fw-semibold">
+      <?php if ($user['foto']): ?>
       <span class="profile-user-icon">
-        <i class=" fas fa-user" style="font-size:20px;"></i>
-      </span>
-      Profil
+        <img  src="../../img/profilupload/<?= htmlspecialchars($user['foto'] ?? 'default.jpeg') ?>" alt="" srcset="">
+        </span>
+        <?php else: ?>
+          <i class=" fas fa-user" style="font-size:20px;"></i>
+        <?php endif; ?>
+        &nbsp;
+       <span class="username-ellipsis"><?= htmlspecialchars($user['username']) ?? '-' ?></span>
     </a>
 
   </div>

@@ -162,28 +162,25 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
         </div>
         <div class="container-profil">
 
-          <div class="flex justify-between items-center">
-            <h3>Id Pembeli : 001</h3>
-            <div class="button-grup flex items-center justify-end">
-              <?php if ($editMode): ?>
-                <a href="profil_pembeli.php" class="btn-profil btn-batal-edit">
-                  <h2>Batal</h2>
-                </a>
-                <form action="simpan_edit.php" method="POST">
-                  <!-- <button type="submit" class=" flex items-center"> -->
-                  <a href="" class="btn-profil btn-edit flex items-center">
-
-                    <h2>
-                      Simpan
-                    </h2>
-                    &nbsp;
-                    <span class="ml-2">
-                      <i class="fa fa-arrow-up" style="font-size: 24px;"></i>
-                    </span>
+          
+          <form action="prosesedit.php" method="POST" enctype="multipart/form-data">
+            <div class="flex justify-between items-center">
+              <h3>Id Pembeli : <?= htmlspecialchars($user['id_pembeli']) ?></h3>
+              <div class="button-grup flex items-center justify-end">
+                 <?php if ($editMode): ?>
+                <br>
+                  <a href="profil_pembeli.php" class="btn-profil btn-batal-edit">
+                    <h2>Batal</h2>
                   </a>
-                  <!-- </button> -->
-                </form>
+                <button type="submit" class="btn-profil btn-edit flex items-center">
+                  <h2>Simpan</h2>
+                  &nbsp;
+                  <span class="ml-2">
+                    <i class="fa fa-arrow-up" style="font-size: 24px;"></i>
+                  </span>
+                </button>
               <?php else: ?>
+                <br>
                 <a href="?edit=1" class="btn-profil btn-edit flex items-center">
                   <h2>Edit</h2>
                   &nbsp;
@@ -192,34 +189,35 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
                   </span>
                 </a>
               <?php endif; ?>
+                <?php if ($editMode): ?>
+                
+                <?php endif; ?>
+              </div>
             </div>
-          </div>
-          <form action="simpan_edit.php" method="POST">
             <div class="flex items-start">
               <div class="img-profil" style="position: relative;">
                 <?php if ($editMode): ?>
                   <label for="foto-upload" style="cursor: pointer; display: block; position: relative;">
-                    <img src="../../img/<?= htmlspecialchars($user['foto'] ?? 'sosis.jpeg') ?>" alt="Foto Profil">
+                    <img src="../../img/profilupload/<?= htmlspecialchars($user['foto'] ?? 'sosis.jpeg') ?>" alt="Foto Profil">
                     <div class="overlay-icon">
                       <i class="fas fa-camera"></i>
                     </div>
                   </label>
                   <input type="file" name="foto" id="foto-upload" style="display: none;">
                 <?php else: ?>
-                  <img src="../../img/<?= htmlspecialchars($user['foto'] ?? 'sosis.jpeg') ?>" alt="Foto Profil">
+                  <img src="../../img/profilupload/<?= htmlspecialchars($user['foto'] ?? 'sosis.jpeg') ?>" alt="Foto Profil">
                 <?php endif; ?>
               </div>
               &nbsp;&nbsp;
               <div>
                 <div>
-                    <h2 class="judul-teks">Nama</h2>
-                    <h1 style="font-weight: 900;"><?= htmlspecialchars($user['username']) ?? 'Restu' ?></h1>
-                  </div>
-                  <br>
-                  <br>
-                  <div>
-                  <h3 class="judul-teks" style="margin-bottom: 5px;">No Telepon</h2>
-                  <h2>+62 123123123</h2>
+                  <h2 class="judul-teks">Nama</h2>
+                  <h1 style="font-weight: 900;"><?= htmlspecialchars($user['username']) ?? 'Restu' ?></h1>
+                </div>
+                <br>
+                <div>
+                  <h3 class="judul-teks" style="margin-bottom: 5px;">No Telepon</h3>
+                  <h2><?= htmlspecialchars($user['no_telpon']) ?? '+62 341234' ?></h2>
                 </div>
               </div>
             </div>
@@ -228,36 +226,42 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
             <h2>Informasi Profil</h2>
             <br>
 
-            <div class="grid grid-cols-12 gap-4">
+            <div class="grid grid-cols-12 gap-4"> 
+              <input type="hidden" name="id_pembeli" value="<?= htmlspecialchars($user['id_pembeli']) ?>" readonly>
+
               <div class="col-span-6 grup-text">
                 <p class="judul-teks">Username</p><br>
                 <?php if ($editMode): ?>
-                  <input type="text" name="username" value="<?= htmlspecialchars($user['username'] ?? 'Restu') ?>">
+                  <input type="text" name="username" value="<?= htmlspecialchars($user['username']) ?>">
                 <?php else: ?>
-                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['username'] ?? 'Restu') ?></h2>
+                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['username']) ?></h2>
                 <?php endif; ?>
               </div>
 
               <div class="col-span-6 grup-text">
                 <p class="judul-teks">No Telepon</p><br>
                 <?php if ($editMode): ?>
-                  <input type="text" name="no_telp" value="<?= htmlspecialchars($user['no_telp'] ?? '+62 341234') ?>">
+                  <input type="number" name="no_telpon" value="<?= htmlspecialchars($user['no_telpon']) ?>">
                 <?php else: ?>
-                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['no_telp'] ?? '+62 341234') ?></h2>
+                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['no_telpon']) ?></h2>
                 <?php endif; ?>
               </div>
 
               <div class="col-span-6 grup-text">
                 <p class="judul-teks">Password</p><br>
-
-                <h2 class="data-profil-teks">********</h2>
+                <?php if ($editMode): ?>
+                  <input type="password" name="password" value="<?= htmlspecialchars($user['password']) ?>">
+                <?php else: ?>
+                  <h2 class="data-profil-teks">********</h2>
+                <?php endif; ?>
               </div>
             </div>
+
+           
           </form>
         </div>
       </div>
     </div>
   </div>
 </body>
-
 </html>

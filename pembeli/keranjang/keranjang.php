@@ -398,7 +398,19 @@ if ($query && mysqli_num_rows($query) > 0) {
             currency: 'IDR'
         }).format(number);
     }
+     const icon = document.getElementById('notifIcon');
+    const dialog = document.getElementById('notifDialog');
 
+    icon.addEventListener('click', function() {
+        dialog.classList.toggle('active');
+    });
+
+    // Optional: Klik di luar akan menutup dialog
+    document.addEventListener('click', function(e) {
+        if (!icon.contains(e.target) && !dialog.contains(e.target)) {
+            dialog.classList.remove('active');
+        }
+    });
     function updateTotal() {
         let totalKeseluruhan = 0;
         document.querySelectorAll('.data-row-tables').forEach(row => {

@@ -147,7 +147,7 @@ $produk = mysqli_fetch_assoc($query_produk);
                             <input type="hidden" name="id_produk" value="<?= $produk['id_produk']; ?>">
                             <div class="grid grid-cols-12 gap-4">
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Foto Produk: </h2>
+                                    <h3 class="fw-medium">Foto Produk: </h2>
                                 </div>
                                 <div class="col-span-10">
                                     <div class="image-upload has-image"
@@ -161,25 +161,25 @@ $produk = mysqli_fetch_assoc($query_produk);
                                     <input type="file" name="image_produk" id="fileInput" accept="image/*" onchange="previewImage(event)">
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Nama Produk: </h2>
+                                    <h3 class="fw-medium">Nama Produk: </h2>
                                 </div>
                                 <div class="col-span-10">
                                     <input type="text" class="input-tambah" style="width:40%;" name="nama_produk" value="<?= $produk['nama_produk']; ?>">
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Harga: </h2>
+                                    <h3 class="fw-medium">Harga: </h2>
                                 </div>
                                 <div class="col-span-10">
                                     <input type="number" class="input-tambah" style="width:36%;" name="harga_produk" value="<?= $produk['harga_produk']; ?>">
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Stok: </h2>
+                                    <h3 class="fw-medium">Stok: </h2>
                                 </div>
                                 <div class="col-span-10">
                                     <input type="number" class="input-tambah" style="width:10%;" name="stok" value="<?= $produk['stok']; ?>">
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Deskripsi: </h2>
+                                    <h3 class="fw-medium">Deskripsi: </h2>
                                 </div>
                                 <div class="col-span-10">
                                     <input type="text" class="input-tambah" style="width:100%;" name="deskripsi_produk" value="<?= $produk['deskripsi_produk']; ?>">
@@ -188,9 +188,11 @@ $produk = mysqli_fetch_assoc($query_produk);
                                     <button type="button" onclick="history.back()" class="btn-tambah btn-batal">
                                         <h2>Batal</h2>
                                     </button>
-                                    <button type="submit" class="btn-tambah btn-simpan">
+                                    <button type="submit" class="btn-tambah btn-simpan flex">
                                         <h2>Update</h2>
-                                        &nbsp;<i class="fa fa-save" style="font-size: 20px;"></i>
+                                        &nbsp;
+                                        &nbsp;
+                                        <i class="fa fa-save" style="font-size: 20px;"></i>
                                     </button>
                                 </div>
                             </div>

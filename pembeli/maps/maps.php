@@ -8,6 +8,9 @@ if ($query && mysqli_num_rows($query) > 0) {
   $user = mysqli_fetch_assoc($query);
 
 }
+$sql_toko = "SELECT nama_toko, alamat FROM tb_adminkasir WHERE id_adminkasir = 1 LIMIT 1";
+$result_toko = mysqli_query($db, $sql_toko);
+$toko = mysqli_fetch_assoc($result_toko);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -168,14 +171,17 @@ if ($query && mysqli_num_rows($query) > 0) {
 
               &nbsp;
               &nbsp;
-               <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
-                <button type="submit" name="logout" class="items-center flex fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:28px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+              &nbsp;
+              &nbsp;
+              <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
+                <button type="submit" name="logout" class="flex items-center fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:16px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                   Logout&nbsp;
                   <span>
-                    <i class="fas fa-sign-out-alt" style="font-size:30px;"></i>
+                    <i class="fas fa-sign-out-alt" style="font-size:20px;"></i>
                   </span>
                 </button>
               </form>
+
 
             </div>
           </h2>
@@ -188,15 +194,16 @@ if ($query && mysqli_num_rows($query) > 0) {
                 </div>
                 <div class="col-span-7 flex items-center justify-start">
                     <div class="maps-teks">
-                        <h3>Nama toko: </h3>
-                        <h2>    Wijaaya Frozen Food</h2>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <h3>Alamat: </h3>
-                        <h2>Desa Legok, Kec. Lohbener, Kab.Indramayu, Jawa Barat 45252</h2>
+                       <h3>Nama toko: </h3>
+<h2><?= htmlspecialchars($toko['nama_toko'] ?? 'Nama toko tidak tersedia') ?></h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h3>Alamat: </h3>
+<h2><?= htmlspecialchars($toko['alamat'] ?? 'Alamat tidak tersedia') ?></h2>
 
                     </div>
                 </div>

@@ -48,9 +48,12 @@ if ($query && mysqli_num_rows($query) > 0) {
     }
 
     .link-sidebar {
-        font-size: 20px;
+        font-size: 16px;
         margin: 20px 5px;
         text-decoration: none;
+     white-space: nowrap;       /* ⛔️ Cegah teks pindah baris */
+    overflow: hidden;          /* 🔒 Sembunyikan teks berlebih */
+    text-overflow: ellipsis; 
     }
 
     .sidebar-icon {
@@ -216,7 +219,7 @@ if ($query && mysqli_num_rows($query) > 0) {
             </a>
         </li>
         <li class="link-dashboard">
-            <a href="../histori-penjualan/histori-penjualan.php" class="link-sidebar align-items-center flex fw-regular">
+            <a href="../histori-penjualan/histori-penjualan.php" class="link-sidebar align-items-center flex fw-regular" style="font-size: 15px;">
 
                 <span class="sidebar-icon">
                     <i class=" fas fa-box" style="font-size:16px;"></i>

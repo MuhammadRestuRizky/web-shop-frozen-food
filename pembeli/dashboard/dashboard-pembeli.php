@@ -28,16 +28,24 @@ if ($query && mysqli_num_rows($query) > 0) {
       font-family: Arial, sans-serif;
       background: linear-gradient(to bottom, #96c5f7, white);
     }
-
+    
     .container {
       padding: 16px;
     }
-
+    
     .head-container {
       padding: 20px 40px;
+      /* background: linear-gradient(to bottom, #96c5f7, white); */
+      /* background-color: #7CAEDF; */
+      
     }
 
+    
+        .right-container {
+          /* background-color: white; */
+        }
     .container-product {
+      /* height: ; */
       background: white;
       padding: 20px 40px;
     }
@@ -151,6 +159,23 @@ if ($query && mysqli_num_rows($query) > 0) {
     .notifikasi-content {
       padding: 10px;
     }
+
+    .sticky-cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 28px;
+      padding: 15px 15px;
+      border-radius: 50%;
+      background-color: transparent;
+      color: black;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    .sticky-cart:hover {
+      transform: scale(1.1);
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../../global.css">
@@ -204,18 +229,20 @@ if ($query && mysqli_num_rows($query) > 0) {
                 </div>
               </div>
 
+             &nbsp;
               &nbsp;
               &nbsp;
-              <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
-                <button type="submit" name="logout" class="items-center flex fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:28px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+              &nbsp;
+             <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
+                <button type="submit" name="logout" class="flex items-center fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:16px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                   Logout&nbsp;
                   <span>
-                    <i class="fas fa-sign-out-alt" style="font-size:30px;"></i>
+                    <i class="fas fa-sign-out-alt" style="font-size:20px;"></i>
                   </span>
                 </button>
               </form>
 
-              
+
 
             </div>
           </h2>
@@ -263,23 +290,28 @@ if ($query && mysqli_num_rows($query) > 0) {
 
                       <span class="stok-value"><?= $qty ?></span>
 
-                      <?php if ($qty == 0): ?>
+                      <?php if ($qty < $produk['stok']): ?>
                         <form method="POST" action="prosesdetailpesanan.php" style="display:inline">
                           <input type="hidden" name="id_produk" value="<?= $id_produk ?>">
                           <input type="hidden" name="aksi" value="tambah">
                           <button class="btn-increase">+</button>
                         </form>
-                      <?php else: ?>
-                        <button class="btn-increase" disabled>+</button>
-                      <?php endif; ?>
-                    </div>
-                  </div>
+                        <?php else: ?>
+                          <button class="btn-increase" disabled>+</button>
+                          <?php endif; ?>
+                        </div>
+                      </div>
                 </div>
               </div>
             <?php endwhile; ?>
           </div>
         </div>
-
+        <?php if ($qty >=1 ): ?>
+        <a href="../keranjang/keranjang.php" class="sticky-cart" title="Lihat Keranjang">
+          <i class="fa fa-shopping-cart"></i>
+        </a> 
+        <?php else: ?>
+          <?php endif; ?>
       </div>
     </div>
   </div>

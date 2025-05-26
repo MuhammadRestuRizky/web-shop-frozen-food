@@ -152,7 +152,7 @@ $produk = mysqli_fetch_assoc($query_produk);
                                 <div class="col-span-10">
                                     <div class="image-upload has-image"
                                         id="imageUpload"
-                                        data-oldimage="../../img/produk/<?= $produk['image_produk']; ?>"
+                                        data-oldimage="../../img/produkImg/<?= $produk['image_produk']; ?>"
                                         onclick="document.getElementById('fileInput').click()"
                                         style="background-image: url('../../img/produkimg/<?= $produk['image_produk']; ?>');">
                                         <i class="fa fa-plus" style="font-size:180px;color:#79AEE0;"></i>

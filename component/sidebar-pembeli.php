@@ -6,6 +6,7 @@ $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
 }
+$nama_user = $user['username'] ?? '';
 ?>
 <style>
   .sidebar-parent {
@@ -167,14 +168,22 @@ if ($query && mysqli_num_rows($query) > 0) {
         Pesanan
       </a>
     </li>
+    <?php
+    $sql_pesanan_user = "SELECT COUNT(*) as jumlah FROM tb_pesanan p
+                     JOIN tb_pembeli ak ON p.id_pembeli = ak.id_pembeli
+                     WHERE ak.username = '$nama_user'  ";
+$query_pesanan_user = mysqli_query($db, $sql_pesanan_user);
+$data_pesanan = mysqli_fetch_assoc($query_pesanan_user);
+    ?>
+       <?php if ($data_pesanan['jumlah'] > 0): ?>
     <li class="link-dashboard">
       <a href="../maps/maps.php" class="link-sidebar align-items-center flex fw-regular">
-
         <span class="sidebar-icon">
           <i class=" fas fa-box" style="font-size:16px;"></i>
         </span>
         Maps
       </a>
     </li>
+    <?php endif; ?>
   </ul>
 </div>

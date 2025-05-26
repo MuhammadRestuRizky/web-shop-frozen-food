@@ -253,16 +253,19 @@ if ($query && mysqli_num_rows($query) > 0) {
                 </div>
               </div>
 
+             &nbsp;
               &nbsp;
               &nbsp;
-             <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
-                <button type="submit" name="logout" class="items-center flex fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:28px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+              &nbsp;
+              <form action="../../proseslogoutpembeli.php" method="POST" style="display: inline;">
+                <button type="submit" name="logout" class="flex items-center fw-semibold" style="background: none; border: none; color: inherit; cursor: pointer;font-size:16px;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                   Logout&nbsp;
                   <span>
-                    <i class="fas fa-sign-out-alt" style="font-size:30px;"></i>
+                    <i class="fas fa-sign-out-alt" style="font-size:20px;"></i>
                   </span>
                 </button>
               </form>
+
 
             </div>
           </h2>

@@ -10,6 +10,17 @@ $nama_toko = $_POST['nama_toko'];
 $alamat = $_POST['alamat'];
 $no_telpon = $_POST['no_telpon'];
 $foto_update = "";
+$alamat_baru = $_POST['alamat'];
+$toko_baru = $_POST['nama_toko'];
+
+$sql_lama = "SELECT alamat FROM tb_adminkasir WHERE id_adminkasir='$id_adminkasir'";
+$res_lama = mysqli_query($db, $sql_lama);
+$data_lama = mysqli_fetch_assoc($res_lama);
+$toko_lama = $data_lama['nama_toko'] ?? '';
+$alamat_lama = $data_lama['alamat'] ?? '';
+$toko_baru = $_POST['nama_toko'];
+//nama_toko baru
+
 
 if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
     $foto = $_FILES['foto']['name'];
@@ -45,13 +56,24 @@ $sql = "UPDATE tb_adminkasir
             nama_toko='$nama_toko', alamat='$alamat', no_telpon='$no_telpon' 
             $foto_update 
         WHERE id_adminkasir='$id_adminkasir'";
-$query = mysqli_query($db, $sql);
+$query = mysqli_query($db, $sql);  
+if ($query) { 
+    if ($alamat_baru !== $alamat_lama) { 
+        $sql_update_alamat_lain = "UPDATE tb_adminkasir 
+                                  SET alamat = '$alamat_baru' 
+                                  WHERE alamat = '$alamat_lama' AND id_adminkasir != '$id_adminkasir'";
+        mysqli_query($db, $sql_update_alamat_lain);
+    }
+    if ($toko_baru !== $toko_lama) { 
+        $sql_update_toko_lain = "UPDATE tb_adminkasir 
+                                  SET nama_toko = '$toko_baru' 
+                                  WHERE nama_toko = '$toko_lama' AND id_adminkasir != '$id_adminkasir'";
+        mysqli_query($db, $sql_update_toko_lain);
+    }
 
-if ($query) {
     $_SESSION['nama_kasir'] = $nama_kasir;
     header("Location: profil-kasir.php");
     exit;
 } else {
     echo "Gagal memperbarui profil!";
 }
-?>

@@ -7,7 +7,7 @@ $sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
-} else { 
+} else {
     header("Location: ../pembeli/dashboard/keranjang.php");
     exit;
 }
@@ -35,7 +35,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 <head>
     <!-- ini gw -->
     <title>Menu Maaaaaaaaaaaakanan</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../global.css">
     <style>
@@ -54,7 +54,6 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #96c5f7, white);
         }
 
         .container {
@@ -62,7 +61,8 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         }
 
         .head-container {
-            padding: 20px 40px;
+            padding: 20px 40px 10px 20px;
+            background-color: #7CAEDF;
         }
 
         .container-pesaanan {
@@ -83,7 +83,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         .pesanan-subcard {
             margin: 0px 1px;
             padding: 10px 4px;
-            display: inline-block;
+            /* display: inline-block; */
             /* border-top-left-radius: 16px;
             border-top-right-radius: 16px; */
             /* width: 100%; */
@@ -103,7 +103,8 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         .items-data-pesanan {
             padding: 10px 0px;
         }
-          .notification-icon {
+
+        .notification-icon {
             position: relative;
             font-size: 30px;
             cursor: pointer;
@@ -157,23 +158,126 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         .notifikasi-content {
             padding: 10px;
         }
+
+        .input-with-icon {
+            /* margin-top: 20px; */
+            /* margin-bottom: 10px; */
+            position: relative;
+            width: 100%;
+            /* max-width: 300px; */
+        }
+
+        .input-with-icon .fa-search {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none;
+        }
+
+        .input-with-icon .fa-search {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none;
+        }
+
+        .input-with-icon .fa-close {
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: black;
+            pointer-events: none;
+        }
+
+        .input-with-icon input {
+            width: 100% !important;
+            padding: 10px 10px 10px 35px;
+            border: none;
+
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .radius-input {
+            border-radius: 20px !important;
+        }
+          .base-line{
+                border:8px solid white;
+            }
     </style>
 </head>
 
 <body>
-    <div class="grid grid-cols-12 h-vhfull">
+    <div class="grid grid-cols-12 ">
+        <div class="col-span-12">
+            <div class="head-container">
+                <div class="grid grid-cols-12">
 
-        <?php include '../../component/sidebar-admin.php'; ?>
-        <div class="col-span-10">
-            <div class="right-container">
-                <div class="head-container flex justify-between items-center">
-                    <h1 style="font-size: 50px;">Kelola Pesanan</h1>
-                    <?php
+                    <div class="col-span-2 profil-parent align-items-center">
+                        <a href="../profil-kasir/profil-kasir.php" class="link-sidebar align-items-center flex fw-semibold">
+                            <?php if ($user['foto']): ?>
+                                <span class="profile-user-icon">
+                                    <img src="../../img/profiluploadtoko/<?= htmlspecialchars($user['foto'] ?? 'default.jpeg') ?>" alt="" srcset="">
+                                </span>
+                            <?php else: ?>
+                                <i class=" fas fa-user" style="font-size:20px;"></i>
+                            <?php endif; ?>
+                            &nbsp;
+                            <span class="username-ellipsis"><?= htmlspecialchars($user['nama_kasir']) ?? '-' ?></span>
+                        </a>
+                    </div>
+                    <div class="col-span-10 flex justify-between items-center">
+                        <div>
+
+                            <h1>Kelola Pesanan</h1>
+                            <?php if ($current_page === 'kelola-produk.php'): ?>
+                                <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <form method="GET" action="../kelolaproduk/kelola-produk.php?cari" class="flex items-center gap-2">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="cari" class="radius-input input-search" placeholder="Cari Produk.">
+                                    </form>
+                                    &nbsp;
+                                    <?php if ($_GET['cari'] ?? ''): ?>
+                                        <form method="GET" action="../kelolaproduk/kelola-produk.php" class="flex items-center gap-2">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
+                                                <i class="fas fa-times" style="font-size:20px;"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+
+                            <?php elseif ($current_page === 'kelola-pesanan.php'): ?>
+                                <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <form method="GET" action="../kelolapesanan/kelola-pesanan.php?cari" class="flex items-center gap-2">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="cari" class="radius-input input-search" placeholder="Cari NO Pesanan.">
+                                    </form>
+                                    <?php if ($_GET['cari'] ?? ''): ?>
+                                        <form method="GET" action="../kelolapesanan/kelola-pesanan.php" class="flex items-center gap-2">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
+                                                <i class="fas fa-times" style="font-size:20px;"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="input-with-icon" style="visibility: hidden;">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" class="radius-input input-search" type="hidden" disabled placeholder="">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php
 
                         $sql = "SELECT * FROM tb_notifikasi 
-        WHERE jenis_pengguna = 'adminkasir'
-        ORDER BY tgl_notifikasi DESC 
-        LIMIT 10";
+                                WHERE jenis_pengguna = 'adminkasir'
+                                ORDER BY tgl_notifikasi DESC 
+                                LIMIT 10";
                         $result = mysqli_query($db, $sql);
 
                         // Hitung jumlah notifikasi
@@ -205,13 +309,22 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+         <div class="col-span-12">
+                <div class="base-line"></div>
+            </div>
+        <?php include '../../component/sidebar-admin.php'; ?>
+        <div class="col-span-10">
+            <div class="right-container">
                 <div class="container-pesaanan">
                     <div class="grid grid-cols-12 gap-4">
-                        <?php if ($result_pesanan && mysqli_num_rows($result_pesanan) > 0): ?> 
+                        <?php if ($result_pesanan && mysqli_num_rows($result_pesanan) > 0): ?>
                             <?php
                             $no = 1;
-                            while ($pesanan = mysqli_fetch_assoc($result_pesanan)) : 
+                            while ($pesanan = mysqli_fetch_assoc($result_pesanan)) :
                                 $id_pesanan = $pesanan['id_pesanan'];
                                 $sqlDetail = "SELECT produk.nama_produk, detail.jumlah_item, produk.harga_produk FROM tb_detailpesanan detail
                                               JOIN tb_produk produk ON detail.id_produk = produk.id_produk
@@ -222,32 +335,40 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                             ?>
                                 <div class="col-span-4 pesanan-card-parent">
                                     <div class="flex justify-between " style="padding: 0px 10px;">
-                                        <div class="pesanan-subcard">
-                                            <h3>No pesanan
-                                                <strong><?= htmlspecialchars($pesanan['id_pesanan']) ?></strong></h3>
+                                        <div class="pesanan-subcard flex">
+                                            &nbsp;
+                                            &nbsp;
+                                            <h3 class="">
+                                                No
+                                                <strong><?= htmlspecialchars($pesanan['id_pesanan']) ?></strong>
+                                            </h3>
+                                            <h3 class="">
+
+                                            </h3>
                                         </div>
                                         <div class="pesanan-subcard">
                                             <form action="prosescetak.php" method="POST">
                                                 <button type="submit" style=" border:none;cursor:pointer;">
-                                                    <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>"> 
-                                                    <a href="">
-                                                        <h3>CETAK <span><i class="fa fa-print"></i></span></h3>
-                                                    </a>
+                                                    <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>">
+
+                                                    <strong>
+                                                        <h3 class="flex justify-between">CETAK <span><i class="fa fa-print"></i></span></h3>
+                                                    </strong>
                                                 </button>
                                             </form>
                                         </div>
                                         <div class="pesanan-subcard">
-                                             <form method="post" action="prosesbatal.php" onsubmit="return confirm('Yakin batalkan pesanan ini?');">
+                                            <form method="post" action="prosesbatal.php" onsubmit="return confirm('Yakin batalkan pesanan ini?');">
                                                 <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>">
                                                 <button type="submit" style=" border:none;cursor:pointer;">
-                                                   <h3>
-                                                <strong>
-                                                    BATALKAN
-                                                </strong>
-                                                </h3>
+                                                    <h4>
+                                                        <strong>
+                                                            BATALKAN
+                                                        </strong>
+                                                    </h4>
                                                 </button>
                                             </form>
-                                          
+
                                         </div>
                                     </div>
                                     <div class="pesanan-card">
@@ -260,7 +381,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                             <hr style="margin: 10px 0px;">
                                         </div>
                                         <div class="pembeli-pesanan-card">
-                                             <p>Pembeli: <?= htmlspecialchars($pesanan['username']) ?></p>
+                                            <p>Pembeli: <?= htmlspecialchars($pesanan['username']) ?></p>
                                             <p>Jumlah Produk: <?= $pesanan['jumlah_produk'] ?></p>
                                             <p>Jumlah Item: <?= $pesanan['jumlah_item'] ?></p>
                                             <p>Ambil Pesanan di : Jln LOHBENER No. 45 indramayu</p>
@@ -274,7 +395,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                                 <p>Total:</p>
                                             </div>
                                             <hr style="margin: 10px 0px; ">
-                                             <?php
+                                            <?php
                                             if ($queryDetail && mysqli_num_rows($queryDetail) > 0) :
                                                 while ($detail = mysqli_fetch_assoc($queryDetail)) :
                                                     $totalItem = $detail['harga_produk'] * $detail['jumlah_item'];
@@ -303,7 +424,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                             <br>
                                             <div class="flex justify-between items-center">
                                                 <p>Subtotal: </p>
-                                             <p>Rp.<?php echo number_format($pesanan['subtotal'], 0, ',', '.'); ?></p>
+                                                <p>Rp.<?php echo number_format($pesanan['subtotal'], 0, ',', '.'); ?></p>
                                             </div>
                                             <br>
                                             <hr style="margin: 10px 0px;height:4px; ">
@@ -322,19 +443,19 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         </div>
     </div>
     <script>
-         const icon = document.getElementById('notifIcon');
-    const dialog = document.getElementById('notifDialog');
+        const icon = document.getElementById('notifIcon');
+        const dialog = document.getElementById('notifDialog');
 
-    icon.addEventListener('click', function() {
-        dialog.classList.toggle('active');
-    });
+        icon.addEventListener('click', function() {
+            dialog.classList.toggle('active');
+        });
 
-    // Optional: Klik di luar akan menutup dialog
-    document.addEventListener('click', function(e) {
-        if (!icon.contains(e.target) && !dialog.contains(e.target)) {
-            dialog.classList.remove('active');
-        }
-    });
+        // Optional: Klik di luar akan menutup dialog
+        document.addEventListener('click', function(e) {
+            if (!icon.contains(e.target) && !dialog.contains(e.target)) {
+                dialog.classList.remove('active');
+            }
+        });
     </script>
 </body>
 

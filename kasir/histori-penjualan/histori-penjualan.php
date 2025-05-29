@@ -40,16 +40,16 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #96c5f7, white);
+            font-family: Arial, sans-serif; 
         }
 
         .container {
             padding: 16px;
         }
 
-        .head-container {
-            padding: 20px 40px;
+   .head-container {
+            padding: 20px 40px 10px 20px;
+            background-color: #7CAEDF;
         }
 
         .container-pesaanan {
@@ -143,27 +143,82 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 
         .notifikasi-content {
             padding: 10px;
+
         }
+          .base-line{
+                border:8px solid white;
+            }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../global.css">
 </head>
 
 <body>
-    <div class="grid grid-cols-12 h-vhfull">
+    <div class="grid grid-cols-12 ">
+        <div class="col-span-12">
+            <div class="head-container">
+                <div class="grid grid-cols-12">
 
-        <?php include '../../component/sidebar-admin.php'; ?>
-        <div class="col-span-10">
-            <div class="right-container">
-                <div class="head-container flex justify-between items-center">
-                    <h1 style="font-size: 50px;">Kelola Pesanan</h1>
-                 
-                     <?php
+                    <div class="col-span-2 profil-parent align-items-center">
+                        <a href="../profil-kasir/profil-kasir.php" class="link-sidebar align-items-center flex fw-semibold">
+                            <?php if ($user['foto']): ?>
+                                <span class="profile-user-icon">
+                                    <img src="../../img/profiluploadtoko/<?= htmlspecialchars($user['foto'] ?? 'default.jpeg') ?>" alt="" srcset="">
+                                </span>
+                            <?php else: ?>
+                                <i class=" fas fa-user" style="font-size:20px;"></i>
+                            <?php endif; ?>
+                            &nbsp;
+                            <span class="username-ellipsis"><?= htmlspecialchars($user['nama_kasir']) ?? '-' ?></span>
+                        </a>
+                    </div>
+                    <div class="col-span-10 flex justify-between items-center">
+                        <div>
+
+                            <h1>Histori Penjualan</h1>
+                            <?php if ($current_page === 'kelola-produk.php'): ?>
+                                <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <form method="GET" action="../kelolaproduk/kelola-produk.php?cari" class="flex items-center gap-2">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="cari" class="radius-input input-search" placeholder="Cari Produk.">
+                                    </form>
+                                    &nbsp;
+                                    <?php if ($_GET['cari'] ?? ''): ?>
+                                        <form method="GET" action="../kelolaproduk/kelola-produk.php" class="flex items-center gap-2">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
+                                                <i class="fas fa-times" style="font-size:20px;"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+
+                            <?php elseif ($current_page === 'kelola-pesanan.php'): ?>
+                                <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <form method="GET" action="../kelolapesanan/kelola-pesanan.php?cari" class="flex items-center gap-2">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="cari" class="radius-input input-search" placeholder="Cari NO Pesanan.">
+                                    </form>
+                                    <?php if ($_GET['cari'] ?? ''): ?>
+                                        <form method="GET" action="../kelolapesanan/kelola-pesanan.php" class="flex items-center gap-2">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
+                                                <i class="fas fa-times" style="font-size:20px;"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="input-with-icon" style="visibility: hidden;">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" class="radius-input input-search" type="hidden" disabled placeholder="">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php
 
                         $sql = "SELECT * FROM tb_notifikasi 
-        WHERE jenis_pengguna = 'adminkasir'
-        ORDER BY tgl_notifikasi DESC 
-        LIMIT 10";
+                                WHERE jenis_pengguna = 'adminkasir'
+                                ORDER BY tgl_notifikasi DESC 
+                                LIMIT 10";
                         $result = mysqli_query($db, $sql);
 
                         // Hitung jumlah notifikasi
@@ -195,7 +250,16 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+         <div class="col-span-12">
+                <div class="base-line"></div>
+            </div>
+        <?php include '../../component/sidebar-admin.php'; ?>
+        <div class="col-span-10">
+            <div class="right-container">
                 <div class="container-pesaanan">
                     <div class="grid grid-cols-12 gap-4">
                         <?php if ($result_pesanan && mysqli_num_rows($result_pesanan) > 0): ?> 
@@ -221,7 +285,20 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                                             <h3>No pesanan
                                                 <strong><?= htmlspecialchars($pesanan['id_pesanan']) ?></strong></h3>
                                             </div>
-                                            <strong><?= htmlspecialchars($pesanan['status']==='Dicetak'?'Berhasil':'gagal') ?></strong></h3>
+                                             <div class="pesanan-subcard">
+                                             <form method="post" action="../kelolapesanan/prosesbatal.php" onsubmit="return confirm('Yakin batalkan pesanan ini?');">
+                                                <input type="hidden" name="id_pesanan" value="<?= $pesanan['id_pesanan'] ?>">
+                                                <button type="submit" style=" border:none;cursor:pointer;">
+                                                   <h3>
+                                                <strong>
+                                                    Hapus
+                                                </strong>
+                                                </h3>
+                                                </button>
+                                            </form>
+                                          
+                                        </div>
+                                            <!-- <strong><?= htmlspecialchars($pesanan['status']==='Dicetak'?'Berhasil':'gagal') ?></strong></h3> -->
                                     </div>
                                     <div class="pesanan-card">
                                         <div class="head-pesanan-card ">

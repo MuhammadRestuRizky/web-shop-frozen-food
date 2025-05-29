@@ -1,5 +1,4 @@
 <?php
-$current_page = basename($_SERVER['PHP_SELF']);
 $nama_kasir = $_SESSION['nama_kasir'];
 $sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
 $query = mysqli_query($db, $sql);
@@ -11,6 +10,7 @@ if ($query && mysqli_num_rows($query) > 0) {
     .sidebar-parent {
 
         background: #7CAEDF;
+        height: 100vh;
     }
 
     ul {
@@ -136,60 +136,17 @@ if ($query && mysqli_num_rows($query) > 0) {
         border-radius: 4px;
         font-size: 16px;
     }
-
+.batas-line{
+    /* background-color: white; */
+    border: solid 8px white;
+}
     .radius-input {
         border-bottom-right-radius: 20px !important;
         border-top-right-radius: 20px !important;
     }
 </style>
 <div class="col-span-2 sidebar-parent">
-    <div class="profil-parent align-items-center padding-sidebar">
-        <a href="../profil-kasir/profil-kasir.php" class="link-sidebar align-items-center flex fw-semibold">
-            <?php if ($user['foto']): ?>
-                <span class="profile-user-icon">
-                    <img src="../../img/profiluploadtoko/<?= htmlspecialchars($user['foto'] ?? 'default.jpeg') ?>" alt="" srcset="">
-                </span>
-            <?php else: ?>
-                <i class=" fas fa-user" style="font-size:20px;"></i>
-            <?php endif; ?>
-            &nbsp;
-            <span class="username-ellipsis"><?= htmlspecialchars($user['nama_kasir']) ?? '-' ?></span>
-        </a>
-
-    </div>
-
-    <?php if ($current_page === 'kelola-produk.php'): ?>
-        <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
-            <form method="GET" action="../kelolaproduk/kelola-produk.php?cari" class="flex items-center gap-2">
-                <i class="fas fa-search"></i>
-                <input type="text" name="cari" class="radius-input input-search" placeholder="Cari Produk.">
-            </form>
-            <form method="GET" action="../kelolaproduk/kelola-produk.php" class="flex items-center gap-2">
-                <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
-                    <i class="fas fa-times" style="font-size:20px;"></i>
-                </button>
-            </form>
-        </div>
-
-    <?php elseif ($current_page === 'kelola-pesanan.php'): ?>
-        <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
-            <form method="GET" action="../kelolapesanan/kelola-pesanan.php?cari" class="flex items-center gap-2">
-                <i class="fas fa-search"></i>
-                <input type="text" name="cari" class="radius-input input-search" placeholder="Cari NO Pesanan.">
-            </form>
-            <form method="GET" action="../kelolapesanan/kelola-pesanan.php" class="flex items-center gap-2">
-                <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
-                    <i class="fas fa-times" style="font-size:20px;"></i>
-                </button>
-            </form>
-        </div>
-    <?php else: ?>
-        <div class="input-with-icon" style="visibility: hidden;">
-            <i class="fas fa-search"></i>
-            <input type="text" class="radius-input input-search" type="hidden" disabled placeholder="">
-        </div>
-    <?php endif; ?>
-
+    
     <ul class=" padding-sidebar">
         <li class="link-dashboard">
             <a href="../kelolaproduk/kelola-produk.php" class="link-sidebar align-items-center flex fw-regular">

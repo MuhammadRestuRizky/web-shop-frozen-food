@@ -129,7 +129,7 @@
       <button type="submit" class="btn-submit" name="submit">REGISTRASI</button>
 
       <div class="login-link">
-        Sudah Punya Akun? <a href="login_pembeli.php">Log-in</a>
+        Sudah Punya Akun? <a href="../login/login_pembeli.php">Log-in</a>
       </div>
     </form>
   </div>

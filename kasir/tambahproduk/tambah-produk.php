@@ -25,8 +25,7 @@ if ($query && mysqli_num_rows($query) > 0) {
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #96c5f7, white);
+            font-family: Arial, sans-serif; 
         }
 
         .container {
@@ -34,7 +33,8 @@ if ($query && mysqli_num_rows($query) > 0) {
         }
 
         .head-container {
-            padding: 20px 40px;
+            padding: 20px 40px 10px 20px;
+            background-color: #7CAEDF;
         }
 
         .right-container {
@@ -42,7 +42,7 @@ if ($query && mysqli_num_rows($query) > 0) {
         }
 
         .container-product {
-            background-color: #C7C7C7;
+            background-color: white;
             padding: 20px 40px;
             height: 100%;
         }
@@ -65,7 +65,7 @@ if ($query && mysqli_num_rows($query) > 0) {
         .image-upload {
             width: 100%;
             height: 300px;
-            border: 2px dashed black;
+            border: 1px solid black;
             border-radius: 16px;
             margin-bottom: 10px;
             background-color: #ffffff;
@@ -102,6 +102,7 @@ if ($query && mysqli_num_rows($query) > 0) {
 
         .input-tambah {
             background: #ffffff;
+            border: 1px solid black !important;
 
             padding: 10px;
             border-radius: 16px;
@@ -115,14 +116,107 @@ if ($query && mysqli_num_rows($query) > 0) {
         }
 
         .btn-batal {
-            background-color: #C71515;
+            border: 2px solid #C71515;
             margin-right: 20px;
+            color: #C71515 ;
+            padding: 10px 40px;
+        }
+        .btn-batal h2{
+            
+            color: #C71515 ;
         }
 
         .btn-simpan {
             background-color: #4FC965;
             margin-right: 20px;
         }
+        .btn-simpan >a {
+            color: white;
+        }
+        
+        .pesanan-card-parent {}
+
+        .pesanan-subcard>h3 {
+            font-weight: 400;
+        }
+
+        .pesanan-subcard {
+            margin: 0px 1px;
+            padding: 10px 4px; 
+            background-color: #E7E5E5;
+        }
+
+        .pesanan-card {
+            background-color: #E7E5E5;
+            border-radius: 16px;
+            padding: 10px;
+        }
+
+        .head-pesanan-card {
+            text-align: center;
+        }
+
+        .items-data-pesanan {
+            padding: 10px 0px;
+        }
+
+        .notification-icon {
+            position: relative;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .notification-icon .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        /* Dialog notifikasi */
+        .notification-dialog {
+            display: none;
+            position: absolute;
+            top: 35px;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            width: 550px;
+            z-index: 100;
+            border-radius: 20px;
+        }
+
+        .notification-dialog.active {
+            display: block;
+        }
+
+        .notification-dialog p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .notification-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .head-notifikasi {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px 10px;
+            background-color: #7CAEDF;
+        }
+
+        .notifikasi-content {
+            padding: 10px;
+        }
+          .base-line{
+                border:8px solid white;
+            }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../global.css">
@@ -130,19 +224,117 @@ if ($query && mysqli_num_rows($query) > 0) {
 
 <body>
     <div class="grid grid-cols-12 h-vhfull">
+        <div class="col-span-12">
+            <div class="head-container">
+                <div class="grid grid-cols-12">
 
+                    <div class="col-span-2 profil-parent align-items-center">
+                        <a href="../profil-kasir/profil-kasir.php" class="link-sidebar align-items-center flex fw-semibold">
+                            <?php if ($user['foto']): ?>
+                                <span class="profile-user-icon">
+                                    <img src="../../img/profiluploadtoko/<?= htmlspecialchars($user['foto'] ?? 'default.jpeg') ?>" alt="" srcset="">
+                                </span>
+                            <?php else: ?>
+                                <i class=" fas fa-user" style="font-size:20px;"></i>
+                            <?php endif; ?>
+                            &nbsp;
+                            <span class="username-ellipsis"><?= htmlspecialchars($user['nama_kasir']) ?? '-' ?></span>
+                        </a>
+                    </div>
+                    <div class="col-span-10 flex justify-between items-center">
+                        <div>
+
+                            <h1>Tambah Produk</h1>
+                            <?php if ($current_page === 'kelola-produk.php'): ?>
+                                <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <form method="GET" action="../kelolaproduk/kelola-produk.php?cari" class="flex items-center gap-2">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="cari" class="radius-input input-search" placeholder="Cari Produk.">
+                                    </form>
+                                    &nbsp;
+                                    <?php if ($_GET['cari'] ?? ''): ?>
+                                        <form method="GET" action="../kelolaproduk/kelola-produk.php" class="flex items-center gap-2">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
+                                                <i class="fas fa-times" style="font-size:20px;"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+
+                            <?php elseif ($current_page === 'kelola-pesanan.php'): ?>
+                                <div class="input-with-icon" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <form method="GET" action="../kelolapesanan/kelola-pesanan.php?cari" class="flex items-center gap-2">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="cari" class="radius-input input-search" placeholder="Cari NO Pesanan.">
+                                    </form>
+                                    <?php if ($_GET['cari'] ?? ''): ?>
+                                        <form method="GET" action="../kelolapesanan/kelola-pesanan.php" class="flex items-center gap-2">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; padding: 6px; display: inline-block;">
+                                                <i class="fas fa-times" style="font-size:20px;"></i>
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="input-with-icon" style="visibility: hidden;">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" class="radius-input input-search" type="hidden" disabled placeholder="">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php
+
+                        $sql = "SELECT * FROM tb_notifikasi 
+                                WHERE jenis_pengguna = 'adminkasir'
+                                ORDER BY tgl_notifikasi DESC 
+                                LIMIT 10";
+                        $result = mysqli_query($db, $sql);
+
+                        // Hitung jumlah notifikasi
+                        $jumlahNotif = mysqli_num_rows($result);
+                        ?>
+                        <div class="notification-container">
+                            <i class="fas fa-bell notification-icon" id="notifIcon">
+                                <span class="badge"><?= $jumlahNotif ?></span>
+                            </i>
+
+                            <div class="notification-dialog" id="notifDialog">
+                                <div class="head-notifikasi">
+                                    <h2>Notifikasi</h2>
+                                </div>
+                                <div class="notifikasi-content">
+
+                                    <?php if ($jumlahNotif > 0): ?>
+                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                            <small>
+                                                <p class="flex">
+                                                    📩 <?= htmlspecialchars($row['deskripsi']) ?>
+                                                    🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
+                                                </p>
+                                            </small>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <p>Tidak ada notifikasi.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-span-12">
+                <div class="base-line"></div>
+            </div>
         <?php include '../../component/sidebar-admin.php'; ?>
         <div class="col-span-10">
-            <div class="right-container">
-                <div class="head-container">
-                    <h1 style="font-size: 50px;">Tambah Produk</h1>
-                </div>
+            <div class="right-container"> 
                 <div class="container-product">
                     <div class="card-product">
                         <form action="prosestambahproduk.php" method="POST" enctype="multipart/form-data">
                             <div class="grid grid-cols-12 gap-4">
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Foto Produk: </h2>
+                                    <h3 class="fw-medium">Foto Produk: </h3>
                                 </div>
                                 <div class="col-span-10">
                                     <div class="image-upload" id="imageUpload" onclick="document.getElementById('fileInput').click()">
@@ -155,36 +347,36 @@ if ($query && mysqli_num_rows($query) > 0) {
                                     <img id="imgpreview" src="#" alt="Preview" style="display: none;" />
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Nama Produk: </h2>
+                                    <h3 class="fw-medium">Nama Produk: </h3>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
+                                    <h3 class="fw-medium">
                                         <input type="text" class="input-tambah" style="width:40%;" name="nama_produk" placeholder="Masukkan nama produk">
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Harga: </h2>
+                                    <h3 class="fw-medium">Harga: </h3>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
+                                    <h3 class="fw-medium">
                                         <input type="number" style="width:36%;" class="input-tambah" name="harga_produk" placeholder="Masukkan harga produk">
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Stok: </h2>
+                                    <h3 class="fw-medium">Stok: </h3>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
+                                    <h3 class="fw-medium">
                                         <input type="number" style="width:10%;" class="input-tambah" name="stok" placeholder="Masukkan stok produk">
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div class="col-span-2">
-                                    <h2 class="fw-medium">Deskripsi: </h2>
+                                    <h3 class="fw-medium">Deskripsi: </h3>
                                 </div>
                                 <div class="col-span-10">
-                                    <h2 class="fw-medium">
+                                    <h3 class="fw-medium">
                                         <input type="text" style="width:100%;" class="input-tambah" name="deskripsi_produk" placeholder="Masukkan deskripsi produk">
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <br>
                                 <div class="col-span-12 flex justify-end">

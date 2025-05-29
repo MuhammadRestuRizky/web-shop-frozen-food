@@ -94,6 +94,21 @@
       color: red;
       font-size: 13px;
     }
+       .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .login-link a {
+      color: #2a8df4;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -113,6 +128,9 @@
       </div>
 
       <button type="submit" class="btn-submit" name="submit">MASUK</button>
+        <div class="login-link">
+        Belum Punya Akun? <a href="../register/registrasi_pembeli.php">Register</a>
+      </div>
     </form>
 
     <?php

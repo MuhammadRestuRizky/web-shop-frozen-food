@@ -1,5 +1,6 @@
 <?php
-$nama_kasir = $_SESSION['nama_kasir'];
+$nama_kasir = $_SESSION['nama_kasir']; 
+$currentPage = basename($_SERVER['PHP_SELF']); 
 $sql = "SELECT * FROM tb_adminkasir WHERE nama_kasir = '$nama_kasir'";
 $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
@@ -35,7 +36,7 @@ if ($query && mysqli_num_rows($query) > 0) {
     }
 
     .padding-sidebar {
-        padding: 20px 20px 0px 20px;
+      padding-top: 20px;
     }
 
     .align-items-center {
@@ -49,11 +50,15 @@ if ($query && mysqli_num_rows($query) > 0) {
 
     .link-sidebar {
         font-size: 16px;
-        margin: 20px 5px;
+        margin: 10px 5px;
+        padding:6px 0px;
         text-decoration: none;
      white-space: nowrap;       /* ⛔️ Cegah teks pindah baris */
     overflow: hidden;          /* 🔒 Sembunyikan teks berlebih */
     text-overflow: ellipsis; 
+    }
+    .link-sidebar-parent{
+          padding: 0px 20px 0px 20px;
     }
 
     .sidebar-icon {
@@ -136,6 +141,9 @@ if ($query && mysqli_num_rows($query) > 0) {
         border-radius: 4px;
         font-size: 16px;
     }
+    .is-active-menu{
+        background-color: #CBE3FB;
+    }
 .batas-line{
     /* background-color: white; */
     border: solid 8px white;
@@ -148,7 +156,7 @@ if ($query && mysqli_num_rows($query) > 0) {
 <div class="col-span-2 sidebar-parent">
     
     <ul class=" padding-sidebar">
-        <li class="link-dashboard">
+        <li class="link-sidebar-parent <?= ($currentPage == 'kelola-produk.php') ? 'is-active-menu' : '' ?>">
             <a href="../kelolaproduk/kelola-produk.php" class="link-sidebar align-items-center flex fw-regular">
 
                 <span class="sidebar-icon">
@@ -157,7 +165,7 @@ if ($query && mysqli_num_rows($query) > 0) {
                 Kelola Produk
             </a>
         </li>
-        <li class="link-dashboard">
+        <li class="link-sidebar-parent <?= ($currentPage == 'tambah-produk.php') ? 'is-active-menu' : '' ?>">
             <a href="../tambahproduk/tambah-produk.php" class="link-sidebar align-items-center flex fw-regular">
 
                 <span class="sidebar-icon">
@@ -166,7 +174,7 @@ if ($query && mysqli_num_rows($query) > 0) {
                 Tambah Produk
             </a>
         </li>
-        <li class="link-dashboard">
+        <li class="link-sidebar-parent <?= ($currentPage == 'kelola-pesanan.php') ? 'is-active-menu' : '' ?>">
             <a href="../kelolapesanan/kelola-pesanan.php" class="link-sidebar align-items-center flex fw-regular">
 
                 <span class="sidebar-icon">
@@ -175,7 +183,7 @@ if ($query && mysqli_num_rows($query) > 0) {
                 Kelola Pesanan
             </a>
         </li>
-        <li class="link-dashboard">
+        <li class="link-sidebar-parent <?= ($currentPage == 'histori-penjualan.php') ? 'is-active-menu' : '' ?>">
             <a href="../histori-penjualan/histori-penjualan.php" class="link-sidebar align-items-center flex fw-regular" style="font-size: 15px;">
 
                 <span class="sidebar-icon">
@@ -184,7 +192,7 @@ if ($query && mysqli_num_rows($query) > 0) {
                 Histori Penjualan
             </a>
         </li>
-        <li class="link-dashboard"> 
+        <li class="link-sidebar-parent"> 
              <form action="../../proseslogoutadminkasir.php" method="POST" style="display: inline;">
                 <button type="submit" name="logout" class="link-sidebar align-items-center flex fw-regular" style="background: none; border: none; color: inherit; cursor: pointer;" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                      <span class="sidebar-icon">

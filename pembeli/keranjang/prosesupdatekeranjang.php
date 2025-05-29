@@ -46,6 +46,10 @@ if (mysqli_num_rows($result) > 0) {
         mysqli_query($db, "DELETE FROM tb_keranjang WHERE id_keranjang = " . $id_keranjang);
         header("Location: keranjang.php");
         exit;
+    }elseif($aksi=='hapussemua'){
+        mysqli_query($db, "DELETE FROM tb_keranjang WHERE id_pembeli = " . $id_pembeli);
+        header("Location: keranjang.php");
+         
     }
 
     mysqli_query($db, "UPDATE tb_keranjang 

@@ -1,5 +1,4 @@
 <?php
-$current_page = basename($_SERVER['PHP_SELF']);
 $username = $_SESSION['username'];
 $sql = "SELECT * FROM tb_pembeli WHERE username = '$username'";
 $query = mysqli_query($db, $sql);
@@ -7,7 +6,9 @@ if ($query && mysqli_num_rows($query) > 0) {
     $user = mysqli_fetch_assoc($query);
 }
 $nama_user = $user['username'] ?? '';
+$id_pembeli = $user['id_pembeli'] ?? '';
 $current_page = basename($_SERVER['PHP_SELF']);
+$aksi = $_GET['aksi'] ?? '';
 ?>
 
 <style>
@@ -28,7 +29,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
     .input-with-icon .form-search {
         width: 100%;
     }
-   .form-search {
+
+    .form-search {
         width: 100% !important;
     }
 
@@ -170,6 +172,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
     .notifikasi-content {
         padding: 10px;
     }
+    
+        .btn-hapus-semua { 
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: #FF0000; 
+            color: white;
+        }
 </style>
 <navbar>
     <div class="navbar-parent">
@@ -246,7 +255,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                     <div class="notification-dialog" id="notifDialog">
                         <div class="head-notifikasi">
-                            <h2>Notifikasi</h2>
+                            <div class="flex items-center justify-between">
+                                <h2>Notifikasi</h2>
+                                <!-- <form method="POST" action="../../component/prosesnotifikasi.php" style="display:inline">
+                                      <input type="hidden" name="redirect_to" value="<?= $_SERVER['PHP_SELF'] ?>">
+                                    <button type="submit" name="aksi" value="hapussemuanotif" class="btn-hapus-semua flex items-center" style="border: none;" onclick="return confirm('Yakin ingin menghapus semua pesanan?')">
+                                        <h2>Hapus</h2>
+                                        &nbsp;
+                                        &nbsp;
+                                        <i class=" fa fa-trash" style="font-size: 20px;"></i>
+                                    </button>
+                                </form> -->
+                            </div>
                         </div>
                         <div class="notifikasi-content">
                             <?php if ($jumlahNotif > 0): ?>
@@ -264,7 +284,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         </div>
                     </div>
                 </div>
-            
+
                 <span onclick="window.location.href='../keranjang/keranjang.php';" class="parent-icon  flex items-center  custompadtom custompadtop <?= ($current_page == 'keranjang.php') ? 'is-active' : '' ?>">
                     <i class="fa fa-cart-shopping" style="font-size: 30px;"></i>
                 </span>
@@ -272,9 +292,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <span onclick="window.location.href='../lihat-pesanan/pesanan.php';" class="parent-icon  flex items-center  custompadtom custompadtop <?= ($current_page == 'pesanan.php') ? 'is-active' : '' ?>">
                     <i class="fa fa-clock-rotate-left" style="font-size: 30px;"></i>
                 </span>
-                    <span onclick="window.location.href='../maps/maps.php';" class="parent-icon  flex items-center  custompadtom custompadtop <?= ($current_page == 'maps.php') ? 'is-active' : '' ?>">
+                <!-- <span onclick="window.location.href='../maps/maps.php';" class="parent-icon  flex items-center  custompadtom custompadtop <?= ($current_page == 'maps.php') ? 'is-active' : '' ?>">
                     <i class="fa fa-map" style="font-size: 30px;"></i>
-                </span>
+                </span> -->
                 <div class="profil-parent items-center padding-sidebar" style="position: relative;">
                     <div class="profile-icon" id="profileIcon" style="cursor: pointer;">
                         <?php if ($user['foto']): ?>

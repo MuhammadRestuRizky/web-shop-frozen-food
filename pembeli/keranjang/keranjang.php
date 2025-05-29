@@ -160,14 +160,23 @@ if ($query && mysqli_num_rows($query) > 0) {
 
 <body>
     <div class="grid grid-cols-12 h-vhfull">
-
         <div class="col-span-12">
             <?php include '../../component/navbar-pembeli.php'; ?>
-         <div class="head-container flex justify-start items-center">
-              <i onclick="window.history.back()" class="fa-solid fa-chevron-left" style="font-size: 40px;"></i>
-              &nbsp;
-              &nbsp;
-                <h1 style="font-size: 50px;">Keranjang</h1>
+            <div class="flex items-center justify-between">
+                <div class="head-container flex justify-start items-center">
+                    <i onclick="window.history.back()" class="fa-solid fa-chevron-left" style="font-size: 40px;"></i>
+                    &nbsp;
+                    &nbsp;
+                    <h1 style="font-size: 50px;">Keranjang</h1>
+                </div>
+                 <form method="POST" action="prosesupdatekeranjang.php" style="display:inline">
+                <button name="aksi" value="hapussemua" class="btn-hapus-semua flex items-center" style="border: none;" onclick="return confirm('Yakin ingin menghapus semua pesanan?')">
+                    <h2>Hapus Semua</h2> 
+                    &nbsp;
+                    &nbsp;
+                    <i class=" fa fa-trash" style="font-size: 20px;"></i>
+                </button>
+                 </form>
             </div>
             <div class="cart-parent">
                 <div class="grid grid-cols-12">
@@ -280,41 +289,41 @@ if ($query && mysqli_num_rows($query) > 0) {
                 <div class="card-cart-total">
                     <div class="grid grid-cols-12 ">
 
-                       <div class="col-span-10 col-start-2">
-                         <div class="cart-container">
-                            <div class="grid grid-cols-12 gap-4">
-                                <div class="col-span-4" style="height:100%;">
-                                    <div class="flex items-center" style="height:100%;">
-                                        <div>
-                                            <button style="background-color: #7CAEDF;" type="submit" class="button-Custom" name="submit_order" <?= $disabled ?>>
-                                                <h2 class="">Checkout</h2>
-                                            </button>
+                        <div class="col-span-10 col-start-2">
+                            <div class="cart-container">
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-4" style="height:100%;">
+                                        <div class="flex items-center" style="height:100%;">
+                                            <div>
+                                                <button style="background-color: #7CAEDF;" type="submit" class="button-Custom" name="submit_order" <?= $disabled ?>>
+                                                    <h2 class="">Checkout</h2>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-span-4" style="height:100%;">
-                                    <div class="flex items-center" style="height:100%;">
-                                        <div>
+                                    <div class="col-span-4" style="height:100%;">
+                                        <div class="flex items-center" style="height:100%;">
+                                            <div>
 
-                                            <h2 class="text-total-semua">Jumlah Produk:</h2>
-                                            <h2 class="text-total-semua">Jumlah Barang:</h2>
-                                            <h2 class="text-total-semua">Total:</h2>
+                                                <h2 class="text-total-semua">Jumlah Produk:</h2>
+                                                <h2 class="text-total-semua">Jumlah Barang:</h2>
+                                                <h2 class="text-total-semua">Total:</h2>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-span-4" style="height:100%;">
-                                    <div class="flex items-center" style="height:100%;">
-                                        <div>
+                                    <div class="col-span-4" style="height:100%;">
+                                        <div class="flex items-center" style="height:100%;">
+                                            <div>
 
-                                            <h2 class="text-total-semua"><?= $total_produk ?> Produk</h2>
-                                            <h2 class="text-total-semua"><?= $total_barang ?> Item</h2>
-                                            <h2 id="total-semua" class="text-total-semua">Rp. <?= number_format($total_harga, 0, ',', '.') ?></h2>
+                                                <h2 class="text-total-semua"><?= $total_produk ?> Produk</h2>
+                                                <h2 class="text-total-semua"><?= $total_barang ?> Item</h2>
+                                                <h2 id="total-semua" class="text-total-semua">Rp. <?= number_format($total_harga, 0, ',', '.') ?></h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                       </div>
                     </div>
                 </div>
             </form>

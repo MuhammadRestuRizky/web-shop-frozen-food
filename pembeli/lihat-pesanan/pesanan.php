@@ -89,6 +89,22 @@ if ($queryUser && mysqli_num_rows($queryUser) > 0) {
     .items-data-pesanan {
       padding: 10px 0px;
     }
+     .sticky-maps {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 46px;
+      padding: 15px 15px;
+      border-radius: 50%;
+      background-color: transparent;
+      color: black;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    .sticky-maps:hover {
+      transform: scale(1.1);
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../../global.css">
@@ -188,6 +204,12 @@ if ($queryUser && mysqli_num_rows($queryUser) > 0) {
 
         </div>
       </div>
+       <?php if ($queryPesanan && mysqli_num_rows($queryPesanan) > 0): ?>
+        <a href="../maps/maps.php" class="sticky-maps" title="Lihat Keranjang">
+          <i class="fa fa-map"></i>
+        </a>
+      <?php else: ?>
+      <?php endif; ?>
     </div>
   </div>
 </body>

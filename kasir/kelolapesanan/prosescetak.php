@@ -131,14 +131,11 @@ $mpdf->WriteHTML($html);
 // Simpan PDF ke folder
 $nama_file = "nota_pesanan_$id_pesanan.pdf";
 $path = "../../nota_pdf/" . $nama_file;
-$mpdf->Output($path, 'I');
 
-// Simpan ke database (opsional)
+$mpdf->Output($path, 'D'); 
 // mysqli_query($db, "UPDATE tb_pesanan SET file_nota = '$nama_file' WHERE id_pesanan = '$id_pesanan'");
 
 // Redirect
-header("Location: kelola-pesanan.php?pdf=$nama_file");
-exit;
 
 
 

@@ -66,8 +66,8 @@
       <img src="./img/logo.png" alt="Frozen Food Logo" class="logo" />
     </div>
     <div class="button-container">
-      <a href="registrasi_pembeli.php" class="btn masuk">MASUK</a>
-      <a href="login-kasir.php" class="btn admin">khusus ADMIN</a>
+      <a href="./pembeli/register/registrasi_pembeli.php" class="btn masuk">MASUK</a>
+      <a href="./kasir/login/login-kasir.php" class="btn admin">khusus ADMIN</a>
     </div>
   </div>
 </body>

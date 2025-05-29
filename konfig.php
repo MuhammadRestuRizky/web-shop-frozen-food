@@ -12,4 +12,6 @@ $db = mysqli_connect($server, $usernameDB, $password, $nama_database, $port);
 if( !$db ){
     die("Gagal terhubung dengan database: " . mysqli_connect_error());
 }
+
+    $current_page = basename($_SERVER['PHP_SELF']);
 ?>

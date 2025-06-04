@@ -299,7 +299,7 @@
     </head>
 
     <body>
-        <div class="grid grid-cols-12  " style="">
+        <div class="grid grid-cols-12  " style="background-color: #7CAEDF;">
             <div class="col-span-12">
                 <div class="head-container">
                     <div class="grid grid-cols-12">
@@ -481,8 +481,20 @@
                         </div>
                         <div class="card-total-products">
                             <h3>
+<?php
+$sqlProdukSum = "SELECT count(*) as jumlah_produk_keseluruhan FROM tb_produk";
+$querysum = mysqli_query($db, $sqlProdukSum);
 
-                                Total Produk : <span class="total-produk">2</span> Produk
+if ($querysum) {
+    $row = mysqli_fetch_assoc($querysum);
+    $jumlah_produk_keseluruhan = $row['jumlah_produk_keseluruhan'];
+    
+} else {
+    echo "Query gagal: " . mysqli_error($db);
+}
+
+?>
+                                Total Produk : <span class="total-produk"><?=$jumlah_produk_keseluruhan?></span> Produk
                             </h3>
                         </div>
                     </div>

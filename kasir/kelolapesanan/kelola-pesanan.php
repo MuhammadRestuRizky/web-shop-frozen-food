@@ -213,7 +213,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 </head>
 
 <body>
-    <div class="grid grid-cols-12 ">
+    <div class="grid grid-cols-12 " style="background-color: #7CAEDF;">
         <div class="col-span-12">
             <div class="head-container">
                 <div class="grid grid-cols-12">
@@ -317,7 +317,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
                 <div class="base-line"></div>
             </div>
         <?php include '../../component/sidebar-admin.php'; ?>
-        <div class="col-span-10">
+        <div class="col-span-10" style="background-color: white;">
             <div class="right-container">
                 <div class="container-pesaanan">
                     <div class="grid grid-cols-12 gap-4">

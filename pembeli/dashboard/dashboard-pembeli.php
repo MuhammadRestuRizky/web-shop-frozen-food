@@ -160,7 +160,7 @@ if ($query && mysqli_num_rows($query) > 0) {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      font-size: 46px;
+      font-size: 67px;
       padding: 15px 15px;
       border-radius: 50%;
       background-color: transparent;
@@ -179,7 +179,7 @@ if ($query && mysqli_num_rows($query) > 0) {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -263,6 +263,7 @@ if (isset($_GET['detail'])) {
             $cek_result = mysqli_query($db, $sql_cek);
             $row_qty = mysqli_fetch_assoc($cek_result);
             $qty = $row_qty['jumlah_item'] ?? 0;
+              // var_dump($row_qty);
             ?>
 
             <div class="col-span-2">
@@ -309,15 +310,16 @@ if (isset($_GET['detail'])) {
                 </div>
               </div>
             </div>
+            <?php  if ($qty??0 >= 1): ?>
+              <a href="../keranjang/keranjang.php" class="sticky-cart" title="Lihat Keranjang">
+                <i class="fa fa-shopping-cart"></i>
+              </a>
+            <?php else: ?>
+            <?php endif; ?>
           <?php endwhile; ?>
         </div>
       </div>
-      <?php if ($qty??0 >= 1): ?>
-        <a href="../keranjang/keranjang.php" class="sticky-cart" title="Lihat Keranjang">
-          <i class="fa fa-shopping-cart"></i>
-        </a>
-      <?php else: ?>
-      <?php endif; ?>
+      
     </div>
   </div>
   </div>

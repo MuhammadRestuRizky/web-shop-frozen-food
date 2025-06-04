@@ -111,7 +111,7 @@ if ($queryUser && mysqli_num_rows($queryUser) > 0) {
 </head>
 
 <body>
-  <div class="grid grid-cols-12 h-vhfull">
+  <div class="grid grid-cols-12 h-vhfull" >
     <div class="col-span-12">
       <?php include '../../component/navbar-pembeli.php'; ?>
       <div class="head-container flex justify-start items-center">
@@ -206,7 +206,7 @@ if ($queryUser && mysqli_num_rows($queryUser) > 0) {
       </div>
        <?php if ($queryPesanan && mysqli_num_rows($queryPesanan) > 0): ?>
         <a href="../maps/maps.php" class="sticky-maps" title="Lihat Keranjang">
-          <i class="fa fa-map"></i>
+          <i class="fa fa-location-dot"></i>
         </a>
       <?php else: ?>
       <?php endif; ?>

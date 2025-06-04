@@ -7,7 +7,7 @@ $query = mysqli_query($db, $sql);
 if ($query && mysqli_num_rows($query) > 0) {
   $user = mysqli_fetch_assoc($query);
 }
-$sql_toko = "SELECT nama_toko, alamat FROM tb_adminkasir WHERE id_adminkasir = 1 LIMIT 1";
+$sql_toko =  "SELECT nama_toko, alamat FROM tb_adminkasir ORDER BY id_adminkasir ASC LIMIT 1";
 $result_toko = mysqli_query($db, $sql_toko);
 $toko = mysqli_fetch_assoc($result_toko);
 ?>
@@ -85,8 +85,7 @@ $toko = mysqli_fetch_assoc($result_toko);
           <div class="card-maps">
             <div class="grid grid-cols-12 gap-4">
               <div class="col-span-5">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247.80746596270092!2d108.28196041490119!3d-6.404378023913158!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6eb9003cad8eb7%3A0x510a49f3cb668dda!2sBC%20ngeteh%20anget!5e0!3m2!1sid!2sid!4v1748057823807!5m2!1sid!2sid" width="100%" height="400px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </div>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7928.6569466925675!2d108.30019756369435!3d-6.480017390225901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec7eeceeeeaad%3A0xa639d272145f5189!2sToko%20FF%20%26%20Frozen%20Food!5e0!3m2!1sid!2sid!4v1749012975820!5m2!1sid!2sid" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
               <div class="col-span-7 flex items-center justify-start">
                 <div class="maps-teks">
                   <h3>Nama toko: </h3>
@@ -108,7 +107,7 @@ $toko = mysqli_fetch_assoc($result_toko);
             <br>
             <h3 class="fw-regular">Link Maps: </h3>
             <h2 class="link-maps">
-              <a href="https://maps.app.goo.gl/BBTVm6PQB7AHgTE49" target="_blank">https://maps.app.goo.gl/BBTVm6PQB7AHgTE49</a>
+              <a href="https://maps.app.goo.gl/NxsoCznPUG16k6pb6" target="_blank">https://maps.app.goo.gl/NxsoCznPUG16k6pb6</a>
             </h2> 
         </div>
       </div>

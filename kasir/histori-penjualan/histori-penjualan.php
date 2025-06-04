@@ -154,7 +154,7 @@ $result_pesanan = mysqli_query($db, $sql_pesanan);
 </head>
 
 <body>
-    <div class="grid grid-cols-12 ">
+    <div class="grid grid-cols-12 " style="background-color: #7CAEDF;">
         <div class="col-span-12">
             <div class="head-container">
                 <div class="grid grid-cols-12">

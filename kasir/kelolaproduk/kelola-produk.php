@@ -286,6 +286,7 @@
                 border-radius: 4px;
                 font-size: 16px;
             }
+            /*  */
 
             .radius-input {
                 border-radius: 20px !important;

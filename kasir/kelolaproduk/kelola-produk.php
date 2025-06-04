@@ -404,7 +404,7 @@
                 <div class="base-line"></div>
             </div>
             <?php include '../../component/sidebar-admin.php'; ?>
-            <div class="col-span-10">
+            <div class="col-span-10" style="background:white;">
                 <div class="right-container">
 
                     <div class="product-parent">

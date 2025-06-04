@@ -25,7 +25,7 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
 
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #96c5f7, white);
+     background-color: #7CAEDF;
     }
 
     .container {
@@ -34,6 +34,7 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
 
     .head-container {
       padding: 20px 40px;
+      background-color: #7CAEDF;
     }
 
     .container-profil {
@@ -85,7 +86,8 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
 
     input[type="text"],
     input[type="email"],
-    input[type="password"], textarea{
+    input[type="password"],
+    textarea {
       background: rgb(223, 223, 223);
       font-size: 24px;
       padding: 5px 10px;
@@ -121,9 +123,11 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
       transition: 0.3s ease;
       font-size: 32px;
     }
-  .img-profil label:hover .overlay-icon {
+
+    .img-profil label:hover .overlay-icon {
       opacity: 1;
     }
+
     .btn-profil {
       border-radius: 16px;
       padding: 10px 15px;
@@ -140,61 +144,61 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
       margin-right: 20px;
       color: black;
     }
-      .notification-icon {
-            position: relative;
-            font-size: 30px;
-            cursor: pointer;
-        }
 
-        .notification-icon .badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
+    .notification-icon {
+      position: relative;
+      font-size: 30px;
+      cursor: pointer;
+    }
 
-        /* Dialog notifikasi */
-        .notification-dialog {
-            display: none;
-            position: absolute;
-            top: 35px;
-            right: 0;
-            background: white;
-            border: 1px solid #ccc;
-            width: 550px;
-            z-index: 100;
-            border-radius: 20px;
-        }
+    .notification-icon .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
 
-        .notification-dialog.active {
-            display: block;
-        }
+    /* Dialog notifikasi */
+    .notification-dialog {
+      display: none;
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      width: 550px;
+      z-index: 100;
+      border-radius: 20px;
+    }
 
-        .notification-dialog p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
+    .notification-dialog.active {
+      display: block;
+    }
 
-        .notification-container {
-            position: relative;
-            display: inline-block;
-        }
+    .notification-dialog p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
 
-        .head-notifikasi {
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            padding: 20px 10px;
-            background-color: #7CAEDF;
-        }
+    .notification-container {
+      position: relative;
+      display: inline-block;
+    }
 
-        .notifikasi-content {
-            padding: 10px;
-        }
+    .head-notifikasi {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 20px 10px;
+      background-color: #7CAEDF;
+    }
 
+    .notifikasi-content {
+      padding: 10px;
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../../global.css">
@@ -204,47 +208,47 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
 <body>
   <div class="grid grid-cols-12 h-vhfull">
     <?php include '../../component/sidebar-admin.php'; ?>
-    <div class="col-span-10">
+    <div class="col-span-10" style="background-color: white;">
       <div class="right-container">
         <div class="head-container flex justify-between items-center">
           <h1 style="font-size: 50px;">Profil Kasir</h1>
-           <?php
+          <?php
 
-                        $sql = "SELECT * FROM tb_notifikasi 
+          $sql = "SELECT * FROM tb_notifikasi 
         WHERE jenis_pengguna = 'adminkasir'
         ORDER BY tgl_notifikasi DESC 
         LIMIT 10";
-                        $result = mysqli_query($db, $sql);
+          $result = mysqli_query($db, $sql);
 
-                        // Hitung jumlah notifikasi
-                        $jumlahNotif = mysqli_num_rows($result);
-                        ?>
-                        <div class="notification-container">
-                            <i class="fas fa-bell notification-icon" id="notifIcon">
-                                <span class="badge"><?= $jumlahNotif ?></span>
-                            </i>
+          // Hitung jumlah notifikasi
+          $jumlahNotif = mysqli_num_rows($result);
+          ?>
+          <div class="notification-container">
+            <i class="fas fa-bell notification-icon" id="notifIcon">
+              <span class="badge"><?= $jumlahNotif ?></span>
+            </i>
 
-                            <div class="notification-dialog" id="notifDialog">
-                                <div class="head-notifikasi">
-                                    <h2>Notifikasi</h2>
-                                </div>
-                                <div class="notifikasi-content">
+            <div class="notification-dialog" id="notifDialog">
+              <div class="head-notifikasi">
+                <h2>Notifikasi</h2>
+              </div>
+              <div class="notifikasi-content">
 
-                                    <?php if ($jumlahNotif > 0): ?>
-                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <small>
-                                                <p class="flex">
-                                                    📩 <?= htmlspecialchars($row['deskripsi']) ?>
-                                                    🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
-                                                </p>
-                                            </small>
-                                        <?php endwhile; ?>
-                                    <?php else: ?>
-                                        <p>Tidak ada notifikasi.</p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
+                <?php if ($jumlahNotif > 0): ?>
+                  <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                    <small>
+                      <p class="flex">
+                        📩 <?= htmlspecialchars($row['deskripsi']) ?>
+                        🕒 <?= date("d-m-Y H:i", strtotime($row['tgl_notifikasi'])) ?>
+                      </p>
+                    </small>
+                  <?php endwhile; ?>
+                <?php else: ?>
+                  <p>Tidak ada notifikasi.</p>
+                <?php endif; ?>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="container-profil">
           <form action="proseseditkasir.php" method="POST" enctype="multipart/form-data">
@@ -253,34 +257,34 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
             <div class="flex justify-between items-center">
               <h2 style="font-weight: 900;">Nama Toko : <?= htmlspecialchars($user['nama_toko']) ?? '-' ?></h2>
               <div class="button-grup flex items-center justify-end">
-                 <?php if ($editMode): ?>
-                <br>
+                <?php if ($editMode): ?>
+                  <br>
                   <a href="profil-kasir.php" class="btn-profil btn-batal-edit">
                     <h2>Batal</h2>
                   </a>
-                <button type="submit" class="btn-profil btn-edit flex items-center">
-                  <h2>Simpan</h2>
-                  &nbsp;
-                  <span class="ml-2">
-                    <i class="fa fa-arrow-up" style="font-size: 24px;"></i>
-                  </span>
-                </button>
-              <?php else: ?>
-                <br>
-                <a href="?edit=1" class="btn-profil btn-edit flex items-center">
-                  <h2>Edit</h2>
-                  &nbsp;
-                  <span class="ml-2">
-                    <i class="fas fa-edit" style="font-size:20px;"></i>
-                  </span>
-                </a>
-              <?php endif; ?>
+                  <button type="submit" class="btn-profil btn-edit flex items-center">
+                    <h2>Simpan</h2>
+                    &nbsp;
+                    <span class="ml-2">
+                      <i class="fa fa-arrow-up" style="font-size: 24px;"></i>
+                    </span>
+                  </button>
+                <?php else: ?>
+                  <br>
+                  <a href="?edit=1" class="btn-profil btn-edit flex items-center">
+                    <h2>Edit</h2>
+                    &nbsp;
+                    <span class="ml-2">
+                      <i class="fas fa-edit" style="font-size:20px;"></i>
+                    </span>
+                  </a>
+                <?php endif; ?>
                 <?php if ($editMode): ?>
-                
+
                 <?php endif; ?>
               </div>
             </div>
-             <div class="flex items-start">
+            <div class="flex items-start">
               <div class="img-profil" style="position: relative;">
                 <?php if ($editMode): ?>
                   <label for="foto-upload" style="cursor: pointer; display: block; position: relative;">
@@ -328,7 +332,7 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
                   <h2 class="data-profil-teks"><?= htmlspecialchars($user['email']) ?? '-' ?></h2>
                 <?php endif; ?>
               </div>
-                   <div class="col-span-6 grup-text">
+              <div class="col-span-6 grup-text">
                 <p class="judul-teks">No Telepon</p>
                 <?php if ($editMode): ?>
                   <input type="text" name="no_telpon" value="<?= htmlspecialchars($user['no_telpon']) ?? '' ?>">
@@ -336,7 +340,7 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
                   <h2 class="data-profil-teks"><?= htmlspecialchars($user['no_telpon']) ?? '-' ?></h2>
                 <?php endif; ?>
               </div>
-              
+
 
               <div class="col-span-6 grup-text">
                 <p class="judul-teks">Nama Toko</p>
@@ -346,15 +350,15 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
                   <h2 class="data-profil-teks"><?= htmlspecialchars($user['nama_toko']) ?? '-' ?></h2>
                 <?php endif; ?>
               </div>
-              
+
               <?php if ($editMode): ?>
-                   <input type="hidden" name="password" value="<?= htmlspecialchars($user['password']) ?? '' ?>">
-                <?php else: ?>
-                  <div class="col-span-6 grup-text">
-                    <p class="judul-teks">Password</p>
+                <input type="hidden" name="password" value="<?= htmlspecialchars($user['password']) ?? '' ?>">
+              <?php else: ?>
+                <div class="col-span-6 grup-text">
+                  <p class="judul-teks">Password</p>
                   <h2 class="data-profil-teks">********</h2>
                 </div>
-                <?php endif; ?>
+              <?php endif; ?>
               <div class="col-span-8 grup-text">
                 <p class="judul-teks">Alamat</p>
                 <?php if ($editMode): ?>
@@ -363,8 +367,27 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
                   <h2 class="data-profil-teks"><?= nl2br(htmlspecialchars($user['alamat'])) ?? '-' ?></h2>
                 <?php endif; ?>
               </div>
+              <div class="col-span-6 grup-text">
+                <p class="judul-teks">Link Google Maps</p>
+                <?php if ($editMode): ?>
+                  <input type="text" name="map_link" value="<?= htmlspecialchars($user['map_link']) ?? '' ?>">
+                <?php else: ?>
+                  <h2 class="data-profil-teks"><?= htmlspecialchars($user['map_link']) ?? '-' ?></h2>
+                <?php endif; ?>
+              </div>
 
-             
+              <div class="col-span-12 grup-text">
+                <p class="judul-teks">Embed Iframe Maps</p>
+                <?php if ($editMode): ?>
+                  <textarea name="iframe_map" rows="5" style="width: 100%;"><?= htmlspecialchars($user['iframe_map']) ?? '' ?></textarea>
+                <?php else: ?>
+                  <div class="data-profil-teks" style="overflow-x:auto;">
+                    <?= $user['iframe_map'] ?? '<p>-</p>' ?>
+                  </div>
+                <?php endif; ?>
+              </div>
+
+
             </div>
 
           </form>
@@ -373,18 +396,18 @@ $editMode = isset($_GET['edit']) && $_GET['edit'] == '1';
     </div>
   </div>
   <script>
-     const icon = document.getElementById('notifIcon');
+    const icon = document.getElementById('notifIcon');
     const dialog = document.getElementById('notifDialog');
 
     icon.addEventListener('click', function() {
-        dialog.classList.toggle('active');
+      dialog.classList.toggle('active');
     });
 
     // Optional: Klik di luar akan menutup dialog
     document.addEventListener('click', function(e) {
-        if (!icon.contains(e.target) && !dialog.contains(e.target)) {
-            dialog.classList.remove('active');
-        }
+      if (!icon.contains(e.target) && !dialog.contains(e.target)) {
+        dialog.classList.remove('active');
+      }
     });
   </script>
 </body>

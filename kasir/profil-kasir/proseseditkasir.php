@@ -8,6 +8,9 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $nama_toko = $_POST['nama_toko'];
 $alamat = $_POST['alamat'];
+$map_link = $_POST['map_link'];
+$iframe_map = $_POST['iframe_map'];
+
 $no_telpon = $_POST['no_telpon'];
 $foto_update = "";
 $alamat_baru = $_POST['alamat'];
@@ -54,7 +57,7 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
 $sql = "UPDATE tb_adminkasir 
         SET nama_kasir='$nama_kasir', email='$email', password='$password', 
             nama_toko='$nama_toko', alamat='$alamat', no_telpon='$no_telpon' 
-            $foto_update 
+            $foto_update, map_link='$map_link', iframe_map='$iframe_map'
         WHERE id_adminkasir='$id_adminkasir'";
 $query = mysqli_query($db, $sql);  
 if ($query) { 
